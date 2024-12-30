@@ -16,6 +16,7 @@ export const Match = () => {
        <h2 className='hidden'><Bowlingdata/></h2> 
        <h2 className='hidden'><Batterdata/></h2> 
        <h2 className='hidden'><Comments/></h2> 
+       <h2 className='hidden'><Playerofmatch/></h2> 
         </div>
     </div>
   )
@@ -26,13 +27,13 @@ export const Match = () => {
 export const Navbar = () => {
 
     const [activeTab, setActiveTab] = useState("SCORECARD"); // Default tab
-const matchnav=["Matchlivedata", "Livescore", "Bowlingdata", "Batingdata", "Comments"]
+const matchnav=["Matchlivedata", "Livescore", "Bowlingdata", "Batingdata", "Comments", "Player of match"]
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
     
     return (<>                    
-             <div className='px-[15px]  border-t-2 '>
+             <div className='px-[40px]  border-t-2 '>
               <ul className='sm:text-[16px] text-[13px] gap-3 text-[#646464] font-semibold flex justify-between items-center sticky top-65 overflow-x-scroll sm:overflow-hidden'>
              {matchnav.map((tab) => (
                     <li
@@ -55,6 +56,7 @@ const matchnav=["Matchlivedata", "Livescore", "Bowlingdata", "Batingdata", "Comm
               {activeTab === "Bowlingdata" && <Bowlingdata/>}
               {activeTab === "Batingdata" && <Batterdata/>}
               {activeTab === "Comments" && <Comments/>}
+              {activeTab === "Player of match" && <Playerofmatch/>}
             </div>
          
      
@@ -176,6 +178,9 @@ export const Batterdata=()=>{
         <TextField id="SR2" label="SR2" variant="filled" type='Number'/>
         <TextField id="Status2" label="Status2" variant="filled" type='text'/>
         <TextField id="Min2" label="Min2" variant="filled" type='number'/>
+        <TextField id="Yettobat" label="Yet to bat" variant="filled" type='text'/>
+        <TextField id="Fallofwickets" label="Fall of wickets" variant="filled" type='text'/>
+       
         
           
         
@@ -209,6 +214,32 @@ export const Comments=()=>{
         <TextField id="Endover2" label="Endover2" variant="filled" type='number' /> 
         <TextField id="Runandwicket2" label="Run and wicket2" variant="filled" type='text' /> 
         <TextField id="overallscore2" label="over all score2" variant="filled" type='number' /> 
+          
+        
+        </div> 
+        <div>
+            <button className='w-full py-1 px-2 font-semibold sm:text-[16px] text-[14px] bg-[#4D28D4] rounded-lg text-[white] hover:scale-105 ease-in-out duration-200'>SUBMIT</button></div>
+        </form>
+     </div>
+    </div>
+
+  )
+}
+
+
+export const Playerofmatch=()=>{
+  return(
+    <div className='w-full min-h-100vh flex flex-col justify-center items-center py-[40px] gap-[30px] '>
+     <h2 className='text-[22px] font-semibold text-[#4D28D4] underline'>PLAYER OF MATCH</h2>
+     <div className=''>
+        <form action=""  className='w-full flex flex-col gap-[50px] justify-center items-center' >
+        <div className=' w-full grid sm:grid-cols-2 grid-cols-1 grid-flow-row text-[17px] justify-center items-center gap-[40px] '>   
+        <TextField id="MatchID" label="MatchID" variant="filled" type='text' />
+        <TextField id="Playername" label="Player name" variant="filled" type='text' />
+        <TextField id="Team" label="Team" variant="filled" type='text' />
+        <TextField id="Batting" label="Batting" variant="filled" type='text' />
+        <TextField id="Bowling" label="Bowling" variant="filled" type='text' />
+        
           
         
         </div> 

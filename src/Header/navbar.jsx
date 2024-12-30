@@ -35,7 +35,7 @@ export const Navbar = () => {
                <Link to={'/match'}>  <li className='flex flex-col items-center group'><p className='flex items-center gap-1 hover:text-[#4D28D4]'>MATCH </p> </li></Link>
                    <Link to={'/market'}> <li className='flex flex-col items-center group'><p className='flex items-center gap-1 hover:text-[#4D28D4]'>MARKET </p> </li></Link>
                    <Link to={'/looking'}> <li className='flex flex-col items-center group'><p className='flex items-center gap-1 hover:text-[#4D28D4]'>LOOKING </p> </li></Link>
-                    <li className='flex flex-col items-center group'><p className='flex items-center gap-1 hover:text-[#4D28D4]'>NEWS</p> </li>
+                    <Link to={'/news'}><li className='flex flex-col items-center group'><p className='flex items-center gap-1 hover:text-[#4D28D4]'>NEWS</p> </li></Link>
                    
                                       
                    <Link  to={"/Login"}><button className='py-[3px] px-[5px] text-[13px]  border-[#4D28D4] border-[2px] rounded-md text-[black] hover:text-[white] hover:bg-[#4D28D4] ease-in-out duration-300'>SIGN IN</button> </Link>  
@@ -49,13 +49,13 @@ export const Navbar = () => {
        <div className={`${isChecked? 'w-[80%] h-screen py-[30px] bg-[#ffffff] fixed z-30 overflow-y-scroll':"hidden"}`}> 
       <div className='w-full px-[40px] flex flex-col text-[14px] gap-5 '>
       <p onClick={handlemenuclose} className='text-[20px]'><RxCross2/></p>
-      <Link  to={"/Login"}><button className='py-[6px] w-full text-[14px] font-medium border-[#4D28D4] border-[2px] rounded-md text-[black] hover:text-[white] hover:bg-[#4D28D4] ease-in-out duration-300'>SIGN IN</button> </Link>
+      <Link  to={"/"}><button className='py-[6px] w-full text-[14px] font-medium border-[#4D28D4] border-[2px] rounded-md text-[black] hover:text-[white] hover:bg-[#4D28D4] ease-in-out duration-300'>SIGN IN</button> </Link>
       
-      <Link to={"/"}><p className='font-medium hover:text-[#4D28D4]'>HOME</p></Link>
+      <Link to={"/home"}><p className='font-medium hover:text-[#4D28D4]'>HOME</p></Link>
       <Link to={"/match"}><p className='font-medium hover:text-[#4D28D4]'>MATCH</p></Link>
       <Link to={"/market"}><p className='font-medium hover:text-[#4D28D4]'>MARKET</p></Link>
       <Link to={"/looking"}><p className='font-medium hover:text-[#4D28D4]'>LOOKING</p></Link>
-      <Link to={"/"}><p className='font-medium hover:text-[#4D28D4]'>NEWS</p></Link>
+      <Link to={"/news"}><p className='font-medium hover:text-[#4D28D4]'>NEWS</p></Link>
       
         
       </div>

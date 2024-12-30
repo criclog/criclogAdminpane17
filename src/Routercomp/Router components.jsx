@@ -6,27 +6,32 @@ import { Match } from "../Match/Match"
 import { Homesect } from "../Homesection/Homesect"
 import { Login } from "../Authentication/Login"
 import { Forgot } from "../Authentication/Forgot"
-import { News } from "../News/News"
-
+import { Newsnavbar } from "../News/News"
+import { ToastContainer} from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
+import { Private } from "./Private"
 
 
 
 export const Routercomponent = () => {
     return (
-      <>
-      <Routes>
+      <><Routes>
+      <Route path="/" element={<Login/>}/>
+
+      <Route  element={<Private/>}>
       <Route path="/" element={<Layout/>}>
-      <Route path="/" element={<Homesect/>}/>
+          <Route path="/home" element={<Homesect/>}/>
           <Route path="/market" element={<Market/>}/>
           <Route path="/looking" element={<Looking/>}/>
           <Route path="/match" element={<Match/>}/>
-          <Route path="/news" element={<News/>}/>
+          <Route path="/news" element={<Newsnavbar/>}/>
 
         </Route>
-        <Route path="/login" element={<Login/>}/>
+        </Route>
+        
         <Route path="/forgot" element={<Forgot/>}/>
         </Routes>
-        
+        <ToastContainer/>
       </>
     )
   }
