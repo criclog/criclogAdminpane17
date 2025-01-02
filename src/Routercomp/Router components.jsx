@@ -10,6 +10,7 @@ import { Newsnavbar } from "../News/News"
 import { ToastContainer} from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
 import { Private } from "./Private"
+import { Tournament } from "../Tournament/Tournament"
 
 
 
@@ -22,9 +23,15 @@ export const Routercomponent = () => {
       <Route path="/" element={<Layout/>}>
           <Route path="/home" element={<Homesect/>}/>
           <Route path="/market" element={<Market/>}/>
+          <Route path="/market/:id" element={<Market/>}/>
           <Route path="/looking" element={<Looking/>}/>
+          <Route path="/looking/:id" element={<Looking/>}/>
           <Route path="/match" element={<Match/>}/>
           <Route path="/news" element={<Newsnavbar/>}/>
+          <Route path="/localnews/:id" element={<Newsnavbar/>}/>
+          <Route path="/internews/:id" element={<Newsnavbar/>}/>
+          <Route path="/tournament" element={<Tournament/>}/>
+          <Route path="/tournament/:id" element={<Tournament/>}/>
 
         </Route>
         </Route>

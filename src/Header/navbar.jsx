@@ -34,11 +34,12 @@ export const Navbar = () => {
                   
                <Link to={'/match'}>  <li className='flex flex-col items-center group'><p className='flex items-center gap-1 hover:text-[#4D28D4]'>MATCH </p> </li></Link>
                    <Link to={'/market'}> <li className='flex flex-col items-center group'><p className='flex items-center gap-1 hover:text-[#4D28D4]'>MARKET </p> </li></Link>
+                   <Link to={'/tournament'}> <li className='flex flex-col items-center group'><p className='flex items-center gap-1 hover:text-[#4D28D4]'>TOURNAMENT </p> </li></Link>
                    <Link to={'/looking'}> <li className='flex flex-col items-center group'><p className='flex items-center gap-1 hover:text-[#4D28D4]'>LOOKING </p> </li></Link>
                     <Link to={'/news'}><li className='flex flex-col items-center group'><p className='flex items-center gap-1 hover:text-[#4D28D4]'>NEWS</p> </li></Link>
                    
                                       
-                   <Link  to={"/Login"}><button className='py-[3px] px-[5px] text-[13px]  border-[#4D28D4] border-[2px] rounded-md text-[black] hover:text-[white] hover:bg-[#4D28D4] ease-in-out duration-300'>SIGN IN</button> </Link>  
+                   <Link  to={"/"}><button className='py-[3px] px-[5px] text-[13px]  border-[#4D28D4] border-[2px] rounded-md text-[black] hover:text-[white] hover:bg-[#4D28D4] ease-in-out duration-300'>SIGN IN</button> </Link>  
                    
                    </ul>
                    

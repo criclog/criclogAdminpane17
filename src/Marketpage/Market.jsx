@@ -1,137 +1,181 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import TextField from "@mui/material/TextField";
-import axios from "axios";  
+import axios from "axios";
 import { toast } from "react-toastify";
 import { Config } from '../utils/Token';
+import { FaEdit } from "react-icons/fa";
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { RiDeleteBin6Fill } from "react-icons/ri";
 
-
-let initial = {
+const initial = {
   productname: "",
   location: "",
   price: "",
   sellername: "",
   description: "",
-  file:null
-}
-
-
+  file: null,
+};
 
 export const Market = () => {
-  const [formdata, Setform] = useState(initial);
-    const [Issubmitting, Setissumitting] = useState(false);
+  const [formdata, setForm] = useState(initial);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const { id } = useParams();
+  const navigate = useNavigate();
 
-    const handleChange = (event) => {
-      const { name, value, files } = event.target
-      if (name === 'file') {
-        Setform((prevformdata) => ({ ...prevformdata, file: files[0] }));
-      } else {
-        Setform((prevformdata) => ({ ...prevformdata, [name]: value }));
-      }
-    };
+  const handleChange = (event) => {
+    const { name, value, files } = event.target;
+    if (name === 'file') {
+      setForm((prevForm) => ({ ...prevForm, file: files[0] }));
+    } else {
+      setForm((prevForm) => ({ ...prevForm, [name]: value }));
+    }
+  };
   
+
+  const getProdById = async (id) => {
+    try {
+       await axios.get(`http://localhost:7000/getMarketById?objectid=${id}`, Config)
+       .then((res) => {
+        toast.success(res.data.message)  
+        setForm(res.data);  
+    })
+    .catch((err) => console.log(err))
+    .finally(() => setIsEdit(true))
+      
+    } catch (error) {
+      toast.error(error.res.data.message );
+    }
+  };
+
+  useEffect(() => {
+    if (id) {
+      getProdById(id);
+    }
+  }, [id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    Setissumitting(true)
+    setIsSubmitting(true);
 
     const formDataToSend = new FormData();
-    for (const key in formdata) {
+    Object.keys(formdata).forEach((key) => {
       formDataToSend.append(key, formdata[key]);
-    }
+    });
 
     try {
-            await axios.post("http://localhost:7000/marketData", formDataToSend, Config)
-                .then((res) => {
-                    toast.success(res.data.message)  
-                })
-                .catch((err) => console.log(err))
-                .finally(() => Setissumitting(false))
-        }
-    
-    catch (error) {
-        console.log(error)
+      if (isEdit) {
+        const response = await axios.put(`http://localhost:7000/updatemarket?objectid=${formdata._id}`, formDataToSend, Config);
+        toast.success(response.data.message);
+      } else {
+        const response = await axios.post("http://localhost:7000/marketData", formDataToSend, Config);
+        toast.success(response.data.message);
+        
+      }
+      navigate('/market');
+    } catch (error) {
+      toast.error(error.response.data.message || 'Error submitting form');
+    } finally {
+      setIsSubmitting(false);
+      setForm(initial);
     }
+  };
 
-
-    Setform(initial)
-
-}
-
-
-
+  const handleclear=()=>{
+    setIsEdit(false)
+    setForm(initial)
+  }
 
 
   return (
-    <div className='w-full min-h-100vh flex flex-col justify-center items-center py-[60px] gap-[30px] '>
-     <h2 className='text-[22px] font-semibold text-[#4D28D4] underline'>MARKET DATA</h2>
-     <div className=''>
-        <form className='w-full flex flex-col gap-[50px] justify-center items-center' onSubmit={handleSubmit} >
-        <div className=' w-full grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 grid-flow-row text-[17px] justify-center items-center gap-[50px] '>   
-        <TextField id="Title" label="Title" variant="filled" type='text' name='productname' value={formdata.productname} onChange={handleChange} />
-        <TextField id="location" label="Location" variant="filled" type='text' name='location' value={formdata.location} onChange={handleChange} />
-        <TextField id="Price" label="Price" variant="filled" type='number' name='price' value={formdata.price} onChange={handleChange}/>
-        <TextField id="SellerName" label="Seller Name" variant="filled" type='text' name='sellername' value={formdata.sellername} onChange={handleChange}/>
-        <TextField id="Description" label="Description" variant="filled" type='text' name='description' value={formdata.description} onChange={handleChange} />
-               <h1 className='w-full flex flex-col gap-3 font-semibold text-[#4D28D4]'><label htmlFor="">Product image:</label> 
-        <input type="file" name='file'  onChange={handleChange}  className='w-[230px] outline-none  px-[4px] py-[2px] rounded-lg text-[14px] text-[#4D28D4]'/></h1>
-        
-        </div> 
-        <div>
-            <button className='w-full py-1 px-2 font-semibold sm:text-[16px] text-[14px] bg-[#4D28D4] rounded-lg text-[white] hover:scale-105 ease-in-out duration-200'>
-            {Issubmitting ?  "submiting.." : 
-                            "submit"}</button></div>
-        </form>
-    
-     </div>
-     <Getproduct/>
+    <div className='w-full min-h-100vh flex flex-col justify-center items-center py-10 px-[30px] gap-8'>
+      <h2 className='text-[20px] font-semibold text-[#4a2be0] underline'>{isEdit ? 'Edit Data' : 'Market Data'}</h2>
+      <form className='w-full flex flex-col gap-12 items-center' onSubmit={handleSubmit}>
+        <div className='grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-8'>
+          <TextField label="Title" variant="filled" type='text' name='productname' value={formdata.productname} onChange={handleChange} />
+          <TextField label="Location" variant="filled" type='text' name='location' value={formdata.location} onChange={handleChange} />
+          <TextField label="Price" variant="filled" type='number' name='price' value={formdata.price} onChange={handleChange} />
+          <TextField label="Seller Name" variant="filled" type='text' name='sellername' value={formdata.sellername} onChange={handleChange} />
+          <TextField label="Description" variant="filled" type='text' name='description' value={formdata.description} onChange={handleChange} />
+          <div className='flex flex-col'>
+            <label htmlFor="file" className='font-semibold text-[#4a2be0]'>Product Image:</label>
+            <input type="file" name='file' onChange={handleChange} className='text-[#4a2be0]' />
+          </div>
+        </div>
+        <div className=' flex gap-[40px]'>
+        <button className='px-4 py-2 font-semibold bg-[#4a2be0] text-white rounded-lg hover:scale-105 transition'>
+          {isSubmitting ? (isEdit ? 'Updating...' : 'Submitting...') : (isEdit ? 'Update' : 'Submit')}
+  
+        </button>
+        {isEdit? (<Link to={'/market'}><button className='px-4 py-2 font-semibold bg-[#c94141] text-white rounded-lg hover:scale-105 transition' onClick={handleclear}>cancel</button></Link>):''}
+        </div>
+      </form>
+      <Getproduct />
     </div>
-
-    
-  )
-}
-
-
-
-
+  );
+};
 
 export const Getproduct = () => {
-  const[product,setproduct]=useState([])
-  
+  const [product, setProduct] = useState([]);
+  const navigate = useNavigate();
 
+  const fetchProgramData = async () => {
+    try {
+     await axios.get("http://localhost:7000/getallData", Config)
+     .then((res) => {
+      toast.success(res.data.message)  
+      setProduct(res.data); 
+  })
+  .catch((err) => console.log(err))
+      
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Error fetching data');
+    }
+  };
 
-  const Fetchprogramdata=async()=>{
-    await axios.get("http://localhost:7000/getallData", Config)
-    .then((res)=>setproduct(res.data))
-    .catch((err)=> toast.error(err.res.data.message))
-    .finally()
+  useEffect(() => {
+    fetchProgramData();
+  }, []);
+
+  const handledelete=async(id)=>{
+       
+    await axios.delete(`http://localhost:7000/deletemarket?objectid=${id}`,Config)
+    .then((res)=> {
+        toast.success(res.data.message)
+        setProduct((Prevproduct)=> Prevproduct.filter((product)=>product._id !== id))
+    })
+    .catch((err)=> console.log(err))
+
 }
 
-useEffect(()=>{
-  Fetchprogramdata();
-},[])
 
 
-
+  const handleUpdate = (id) => {
+    navigate(`/market/${id}`);
+  };
 
   return (
-    <div>   
-<div className='w-full min-h-100vh flex flex-col gap-5 justify-center items-center px-[20px]'>
-  <h1 className='text-[20px]'>Market details</h1>
-  <div className='w-full grid md:grid-cols-2 grid-cols-1 px-[30px] gap-10 '>
-{
-                    product.map((prod)=>(
-                        <div key={prod._id} className="w-full h-full bg-[#f7f5f8] flex flex-col gap-3 p-4 text-[#4D28D4] text-[14px] border-2 border-[#bbb8b8] rounded-xl"> 
-                           <div className='flex items-center justify-between'> <h1 className='font-semibold  '>Title: <span className="text-[black]  font-normal">{prod.productname}</span></h1></div>
-                            <h1 className='font-semibold' >location: <span className="text-[black] font-normal">{prod.location}</span></h1>
-                            <h1 className='font-semibold'>Price: <span className="text-[black] font-normal">{prod.price}</span></h1>
-                            <h1 className='font-semibold'>Seller Name: <span className="text-[black] font-normal">{prod.sellername}</span></h1>
-                            <h1 className='font-semibold'>description: <span className="text-[black] font-normal">{prod.description}</span></h1>
-                            <img src={`http://localhost:7000/view/${prod.filename}`} alt="" className='w-[200px] h-[200px] mx-auto' />
-                            <h1 className='font-semibold'>posted: <span className="text-[black] font-normal">{prod.createdAt}</span></h1>
-                            </div>
-))}
-</div>
-</div>
+    <div className='w-full min h-100vh flex flex-col gap-5 items-center px-5'>
+      <h1 className='text-[20px]'>Market Details</h1>
+      <div className='grid md:grid-cols-2 gap-8'>
+        {product.map((prod) => (
+          <div key={prod._id} className='bg-gray-200 p-4 rounded-xl text-[14px] gap-3 flex flex-col'>
+            <div className='flex justify-between items-center '>
+              <h1 className='font-semibold'>Title: <span>{prod.productname}</span></h1>
+              <div className='flex gap-6'>
+              <FaEdit className='text-[20px] cursor-pointer text-[#4a2be0]' onClick={() => handleUpdate(prod._id)} />
+              <RiDeleteBin6Fill className="text-[20px] cursor-pointer text-[red]" onClick={()=>handledelete(prod._id)}/>
+              </div>
+            </div>
+            <h1>Location: {prod.location}</h1>
+            <h1>Price: {prod.price}</h1>
+            <h1>Seller Name: {prod.sellername}</h1>
+            <h1>Description: {prod.description}</h1>
+            <img src={`http://localhost:7000/view/${prod.filename}`} alt="Product" className='w-40 h-40 mx-auto' />
+            <h1>Posted: {prod.createdAt}</h1>
+          </div>
+        ))}
+      </div>
     </div>
-  )
-}
+  );
+};

@@ -3,6 +3,9 @@ import TextField from "@mui/material/TextField";
 import { Config } from '../utils/Token';
 import axios from "axios";  
 import { toast } from "react-toastify";
+import { FaEdit } from "react-icons/fa";
+import { RiDeleteBin6Fill } from "react-icons/ri";
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 
 export const Newsnavbar=()=>{
@@ -78,6 +81,9 @@ let newsinitial = {
 export const Localnews = () => {
 const [localformdata, Setlocalform] = useState(newsinitial);
     const [Issubmitting, Setissumitting] = useState(false);
+    const [isEdit, setIsEdit] = useState(false);
+    const { id } = useParams();
+    const navigate = useNavigate();
 
     const handleChange = (event) => {
       const { name, value, files } = event.target
@@ -87,6 +93,31 @@ const [localformdata, Setlocalform] = useState(newsinitial);
         Setlocalform((prevlocalformdata) => ({ ...prevlocalformdata, [name]: value }));
       }
     };
+
+
+    const getlocalnewsById = async (id) => {
+      try {
+         await axios.get(`http://localhost:7000/getnewsById?objectid=${id}`, Config)
+         .then((res) => {
+          toast.success(res.data.message)  
+          Setlocalform(res.data);  
+      })
+      .catch((err) => console.log(err))
+      .finally(() => setIsEdit(true))
+        
+      } catch (error) {
+        toast.error(error.res.data.message );
+      }
+    };
+  
+    useEffect(() => {
+      if (id) {
+        getlocalnewsById(id);
+      }
+    }, [id]);
+  
+
+
 
     const handleSubmit = async (e) => {
       e.preventDefault();
@@ -98,13 +129,22 @@ const [localformdata, Setlocalform] = useState(newsinitial);
       }
   
       try {
+        if (isEdit) {
+          await axios.put(`http://localhost:7000/updatenews?objectid=${localformdata._id}`, formDataToSend, Config)
+          .then((res) => {toast.success(res.data.message)
+           navigate('/news');
+           
+          })
+          .catch((err) => console.log(err))
+                 .finally(() => Setissumitting(false))
+       } else {
               await axios.post("http://localhost:7000/newsData", formDataToSend, Config)
                   .then((res) => {
                       toast.success(res.data.message)  
                   })
                   .catch((err) => console.log(err))
                   .finally(() => Setissumitting(false))
-          }
+          }}
       
       catch (error) {
           console.log(error)
@@ -115,11 +155,14 @@ const [localformdata, Setlocalform] = useState(newsinitial);
   
   }
 
-
+  const handleclear=()=>{
+    setIsEdit(false)
+    Setlocalform(newsinitial)
+  }
 
   return (
     <div className='w-full min-h-100vh flex flex-col justify-center items-center py-[40px] gap-[30px] '>
-     <h2 className='text-[22px] font-semibold text-[#4D28D4] underline'>LOCAL NEWS DATA</h2>
+     <h2 className='text-[22px] font-semibold text-[#4D28D4] underline'>{isEdit ? 'Edit Local News' : 'Local News Data'}</h2>
      <div className=''>
         <form onSubmit={handleSubmit}  className='w-full flex flex-col gap-[50px] justify-center items-center' >
         <div className=' w-full grid sm:grid-cols-2 grid-cols-1 grid-flow-row text-[17px] justify-center items-center gap-[40px] '>   
@@ -137,9 +180,13 @@ const [localformdata, Setlocalform] = useState(newsinitial);
         
         </div> 
         <div>
-            <button className='w-full py-1 px-2 font-semibold sm:text-[16px] text-[14px] bg-[#4D28D4] rounded-lg text-[white] hover:scale-105 ease-in-out duration-200'>
-            {Issubmitting ?  "submiting.." : 
-                            "submit"}</button></div>
+        <div className=' flex gap-[40px]'>
+        <button className='px-4 py-2 font-semibold bg-[#4a2be0] text-white rounded-lg hover:scale-105 transition'>
+          {Issubmitting ? (isEdit ? 'Updating...' : 'Submitting...') : (isEdit ? 'Update' : 'Submit')}
+  
+        </button>
+        {isEdit? (<Link to={'/news'}><button className='px-4 py-2 font-semibold bg-[#c94141] text-white rounded-lg hover:scale-105 transition' onClick={handleclear}>cancel</button></Link>):''}
+        </div></div>
         </form>
      </div>
      <Getlocalnews/>
@@ -153,6 +200,7 @@ const [localformdata, Setlocalform] = useState(newsinitial);
 export const Getlocalnews = () => {
   const[localnews,setlocalnews]=useState([])
   
+  const navigate = useNavigate();
 
 
   const Fetchlocalnewsdata=async()=>{
@@ -166,6 +214,21 @@ useEffect(()=>{
   Fetchlocalnewsdata();
 },[])
 
+const handledelete=async(id)=>{
+       
+  await axios.delete(`http://localhost:7000/deletenews?objectid=${id}`,Config)
+  .then((res)=> {
+      toast.success(res.data.message)
+      setlocalnews((Prevlocalnews)=> Prevlocalnews.filter((localnews)=>localnews._id !== id))
+  })
+  .catch((err)=> console.log(err))
+
+}
+
+
+const handleUpdate = (id) => {
+  navigate(`/localnews/${id}`);
+};
 
 
 
@@ -177,7 +240,11 @@ useEffect(()=>{
 {
                     localnews.map((news)=>(
                         <div key={news._id} className="w-full h-full bg-[#f7f5f8] flex flex-col gap-3 p-4 text-[#4D28D4] text-[14px] border-2 border-[#bbb8b8] rounded-xl"> 
-                           <div className='flex items-center justify-between'> <h1 className='font-semibold  '>Title: <span className="text-[black]  font-normal">{news.newsTitle}</span></h1></div>
+                           <div className='flex items-start justify-between'> <h1 className='font-semibold  '>Title: <span className="text-[black]  font-normal">{news.newsTitle}</span></h1>
+                            <div className='flex gap-6'>
+                            <FaEdit className='text-[20px] cursor-pointer text-[#4a2be0]' onClick={() => handleUpdate(news._id)}  />
+                            <RiDeleteBin6Fill className="text-[20px] cursor-pointer text-[red]" onClick={() => handledelete(news._id)} />
+                              </div></div>
                             <h1 className='font-semibold' >location: <span className="text-[black] font-normal">{news.location}</span></h1>
                             <h1 className='font-semibold'>description: <span className="text-[black] font-normal">{news.description}</span></h1>
                             <h1 className='font-semibold'>match Details: <span className="text-[black] font-normal">{news.matchDetails}</span></h1>
@@ -214,6 +281,9 @@ let interinitial = {
 export const Internationalnews = () => {
   const [interformdata, Setinterform] = useState(interinitial);
   const [Issubmitting, Setissumitting] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+    const { id } = useParams();
+    const navigate = useNavigate();
 
   const handleChange = (event) => {
     const { name, value, files } = event.target
@@ -223,6 +293,27 @@ export const Internationalnews = () => {
       Setinterform((previnterformdata) => ({ ...previnterformdata, [name]: value }));
     }
   };
+
+  const getinternewsById = async (id) => {
+    try {
+       await axios.get(`http://localhost:7000/getInternationalById?objectid=${id}`, Config)
+       .then((res) => {
+        toast.success(res.data.message)  
+        Setinterform(res.data);  
+    })
+    .catch((err) => console.log(err))
+    .finally(() => setIsEdit(true))
+      
+    } catch (error) {
+      toast.error(error.res.data.message );
+    }
+  };
+
+  useEffect(() => {
+    if (id) {
+      getinternewsById(id);
+    }
+  }, [id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -234,29 +325,40 @@ export const Internationalnews = () => {
     }
 
     try {
-            await axios.post("http://localhost:7000/internationalData", formDataToSend, Config)
+      if (isEdit) {
+        await axios.put(`http://localhost:7000/updateInternational?objectid=${interformdata._id}`, formDataToSend, Config)
+        .then((res) => {toast.success(res.data.message)
+         navigate('/news');
+         
+        })
+        .catch((err) => console.log(err))
+               .finally(() => Setissumitting(false))
+     } else {  await axios.post("http://localhost:7000/internationalData", formDataToSend, Config)
                 .then((res) => {
                     toast.success(res.data.message)  
                 })
                 .catch((err) => console.log(err))
                 .finally(() => Setissumitting(false))
-        }
+        }}
     
     catch (error) {
         console.log(error)
     }
 
 
-    Setinterform(newsinitial)
+    Setinterform(interinitial)
 
 }
-
+const handleclear=()=>{
+  setIsEdit(false)
+  Setinterform(interinitial)
+}
 
 
 
   return (
     <div className='w-full min-h-100vh flex flex-col justify-center items-center py-[40px] gap-[30px] '>
-     <h2 className='text-[22px] font-semibold text-[#4D28D4] underline'>INTERNATIONAL NEWS DATA</h2>
+     <h2 className='text-[22px] font-semibold text-[#4D28D4] underline'>{isEdit ? 'Edit International News' : 'INTERNATIONAL NEWS DATA'}</h2>
      <div className=''>
      <form onSubmit={handleSubmit}  className='w-full flex flex-col gap-[50px] justify-center items-center' >
         <div className=' w-full grid sm:grid-cols-2 grid-cols-1 grid-flow-row text-[17px] justify-center items-center gap-[40px] '>   
@@ -274,9 +376,14 @@ export const Internationalnews = () => {
         
         </div> 
         <div>
-            <button className='w-full py-1 px-2 font-semibold sm:text-[16px] text-[14px] bg-[#4D28D4] rounded-lg text-[white] hover:scale-105 ease-in-out duration-200'>
-            {Issubmitting ?  "submiting.." : 
-                            "submit"}</button></div>
+            <div className=' flex gap-[40px]'>
+                    <button className='px-4 py-2 font-semibold bg-[#4a2be0] text-white rounded-lg hover:scale-105 transition'>
+                      {Issubmitting ? (isEdit ? 'Updating...' : 'Submitting...') : (isEdit ? 'Update' : 'Submit')}
+              
+                    </button>
+                    {isEdit? (<Link to={'/news'}><button className='px-4 py-2 font-semibold bg-[#c94141] text-white rounded-lg hover:scale-105 transition' onClick={handleclear}>cancel</button></Link>):''}
+                    </div>
+                    </div>
         </form>
      </div>
      <Getinternews/>
@@ -290,6 +397,7 @@ export const Internationalnews = () => {
 
 export const Getinternews = () => {
   const[internews,setinternews]=useState([])
+    const navigate = useNavigate();
   
 
 
@@ -304,7 +412,21 @@ useEffect(()=>{
   Fetchinternewsdata();
 },[])
 
+const handledelete=async(id)=>{
+       
+  await axios.delete(`http://localhost:7000/deleteInternational?objectid=${id}`,Config)
+  .then((res)=> {
+      toast.success(res.data.message)
+      setinternews((Previnternews)=> Previnternews.filter((internews)=>internews._id !== id))
+  })
+  .catch((err)=> console.log(err))
 
+}
+
+
+const handleUpdate = (id) => {
+  navigate(`/internews/${id}`);
+};
 
 
   return (
@@ -315,7 +437,11 @@ useEffect(()=>{
 {
                     internews.map((news)=>(
                         <div key={news._id} className="w-full h-full bg-[#f7f5f8] flex flex-col gap-3 p-4 text-[#4D28D4] text-[14px] border-2 border-[#bbb8b8] rounded-xl"> 
-                           <div className='flex items-center justify-between'> <h1 className='font-semibold  '>Title: <span className="text-[black]  font-normal">{news.newsTitle}</span></h1></div>
+                           <div className='flex items-center justify-between'> <h1 className='font-semibold  '>Title: <span className="text-[black]  font-normal">{news.newsTitle}</span></h1>
+                           <div className='flex gap-6'>
+                             <FaEdit className='text-[20px] cursor-pointer text-[#4a2be0]' onClick={() => handleUpdate(news._id)}  />
+                            <RiDeleteBin6Fill className="text-[20px] cursor-pointer text-[red]" onClick={() => handledelete(news._id)} />
+                            </div></div>
                             <h1 className='font-semibold' >location: <span className="text-[black] font-normal">{news.location}</span></h1>
                             <h1 className='font-semibold'>description: <span className="text-[black] font-normal">{news.description}</span></h1>
                             <h1 className='font-semibold'>match Details: <span className="text-[black] font-normal">{news.matchDetails}</span></h1>
