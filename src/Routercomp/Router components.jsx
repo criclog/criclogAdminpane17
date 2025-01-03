@@ -27,6 +27,12 @@ export const Routercomponent = () => {
           <Route path="/looking" element={<Looking/>}/>
           <Route path="/looking/:id" element={<Looking/>}/>
           <Route path="/match" element={<Match/>}/>
+          <Route path="/livescore/:id" element={<Match/>}/>
+          <Route path="/matchlive/:id" element={<Match/>}/>
+          <Route path="/playerofmatch/:id" element={<Match/>}/>
+          <Route path="/comment/:id" element={<Match/>}/>
+          <Route path="/bowling1/:id" element={<Match/>}/>
+          <Route path="/batting1/:id" element={<Match/>}/>
           <Route path="/news" element={<Newsnavbar/>}/>
           <Route path="/localnews/:id" element={<Newsnavbar/>}/>
           <Route path="/internews/:id" element={<Newsnavbar/>}/>
