@@ -60,8 +60,8 @@ const handleSubmit = async (e) => {
     <h2 className='sm:text-[26px] text-[22px] font-semibold'>Change Password</h2>
     <form className="flex flex-col gap-[40px] px-[10px] " onSubmit={handleSubmit}>
         <div>
-                <label className='font-semibold sm:text-[20px] text-[16px]'>Email ID </label>
-                <input className="py-[1px] sm:px-3 px-2 sm:w-[250px] w-[140px] sm:text-[18px] text-[12px] ml-[50px] sm:ml-[60px] border-[#4D28D4] border-[2px] sm:rounded-xl rounded-lg outline-none" type="text"
+                <label className='font-semibold md:text-[20px] sm:text-[18px] text-[14px]'>Email ID </label>
+                <input className="py-[1px] sm:px-3 px-2 sm:w-[250px] w-[140px] sm:text-[18px] text-[12px] ml-[45px] sm:ml-[60px] border-[#4D28D4] border-[2px] sm:rounded-xl rounded-lg outline-none" type="text"
                     name="email"
                     placeholder="Enter Your Email ID"
                     value={updatedata.email}
@@ -69,7 +69,7 @@ const handleSubmit = async (e) => {
                     required />
         </div>
         <div>
-                <label className='font-semibold sm:text-[20px] text-[16px]'>New Password </label>
+                <label className='font-semibold md:text-[20px] sm:text-[18px] text-[14px]'>New Password </label>
                 <input className="py-[1px] sm:px-3 px-2 sm:w-[250px] w-[140px] sm:text-[18px] text-[12px] ml-[4px] border-[#4D28D4] border-[2px] sm:rounded-xl rounded-lg outline-none" type="Password"
                     name="password"
                     placeholder="Enter your Password"

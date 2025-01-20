@@ -5,7 +5,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { toast } from "react-toastify";
 import { Config } from '../utils/Token';
 import axios from "axios";
-import { Batting1card, Bowling1card, CommentaryCard, Livescorecard, Matchlivecard, PlayerofmatchdataCard } from './Matchcard';
+import { Batting1card, Batting2card, Bowling1card, Bowling2card, CommentaryCard, Livescorecard, Matchlivecard, PlayerofmatchdataCard } from './Matchcard';
 
 
 
@@ -63,9 +63,9 @@ const matchnav=["Match live data", "Livescore", "Bowlingdata", 'Bowling 2', "Bat
               {activeTab === "Match live data" && <Matchlivedata/> }
               {activeTab === "Livescore" && <Livescore/> }
               {activeTab === "Bowlingdata" && <Bowlingdata/>}
-              {activeTab === "Bowlingdata 2" && <Bowlingdata2/>}
+              {activeTab === "Bowling 2" && <Bowlingdata2/>}
               {activeTab === "Batingdata" && <Batterdata/>}
-              {activeTab === "Batingdata 2" && <Batterdata2/>}
+              {activeTab === "Bating 2" && <Batterdata2/>}
               {activeTab === "Comments" && <Comments/>}
               {activeTab === "Player of match" && <Playerofmatch/>}
             </div>
@@ -456,29 +456,118 @@ const handleclear=()=>{
 }
 
 
+
+const bowl2init={
+  MatchID:'',
+  bowlername2:'',
+  over2:'',
+  run2:'',
+  wicket2:'',
+  med2:'',
+  wide2:'',
+  ECO2:''
+}
+
+
 export const Bowlingdata2=()=>{
+
+  const [Bowling2data, SetBowling2data] = useState(bowl2init);
+  const [Issubmitting, Setissumitting] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const { id } = useParams();
+  const navigate = useNavigate();
+  
+
+  const handleChange = (event) => {
+    const { name, value } = event.target
+    SetBowling2data((prevliveformdata) => ({ ...prevliveformdata, [name]: value }));
+  };
+
+  const getbowling2ById = async (id) => {
+    try {
+       await axios.get(`http://localhost:7000/getBowlingData2ByIdandupdate?objid=${id}`, Config)
+       .then((res) => {
+        toast.success(res.data.message)  
+        SetBowling2data(res.data);  
+    })
+    .catch((err) => console.log(err))
+    .finally(() => setIsEdit(true))
+      
+    } catch (error) {
+      toast.error(error.res.data.message );
+    }
+  };
+
+   useEffect(() => {
+      if (id) {
+        getbowling2ById(id);
+      }
+    }, [id]);
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  Setissumitting(true)
+
+ 
+
+  try {
+    if (isEdit) {
+      await axios.put(`http://localhost:7000/updateBowlingData2ById?objid=${Bowling2data._id}`, Bowling2data, Config)
+      .then((res) => {toast.success(res.data.message)
+       navigate('/match');
+       
+      })
+      .catch((err) => console.log(err))
+             .finally(() => Setissumitting(false))
+   } else {
+  await axios.post("http://localhost:7000/BowlingData2", Bowling2data, Config)
+              .then((res) => {
+                  toast.success(res.data.message)  
+              })
+              .catch((err) => console.log(err))
+              .finally(() => Setissumitting(false))
+      }}
+  
+  catch (error) {
+      console.log(error)
+  }
+
+
+  SetBowling2data(bowl2init)
+
+}
+
+const handleclear=()=>{
+  setIsEdit(false)
+  SetBowling2data(bowl2init)
+}
+
   return(
     <div className='w-full min-h-100vh flex flex-col justify-center items-center py-[40px] gap-[30px] '>
-     <h2 className='text-[22px] font-semibold text-[#4D28D4] underline'>BOWLING DATA TEAM 2</h2>
+     <h2 className='text-[22px] font-semibold text-[#4D28D4] underline'>{isEdit ? 'EDIT LIVE DATA' : 'BOWLING DATA TEAM 2'}</h2>
      <div className=''>
-        <form action=""  className='w-full flex flex-col gap-[50px] justify-center items-center' >
+        <form onSubmit={handleSubmit} className='w-full flex flex-col gap-[50px] justify-center items-center' >
         <div className=' w-full grid sm:grid-cols-2 grid-cols-1 grid-flow-row text-[17px] justify-center items-center gap-[40px] '>   
-        <TextField id="MatchID" label="MatchID" variant="filled" type='Number' />
-        <TextField id="BowlerName2" label="Bowler Name Team 2" variant="filled" type='text' />
-        <TextField id="Overteam2" label="Over Team 2" variant="filled" type='Number' />
-        <TextField id="Medteam2" label="Med Team 2" variant="filled" type='number' />
-        <TextField id="Runteam2" label="Run Team 2" variant="filled" type='number' /> 
-        <TextField id="Wideteam2" label="Wide Team 2" variant="filled" type='number'/>
-        <TextField id="Wicketteam2" label="Wicket Team 2" variant="filled" type='Number'/>
-        <TextField id="ECO2" label="ECO Team2" variant="filled" type='Number'/>
+        <TextField id="MatchID" label="MatchID" variant="filled" type='text' name='MatchID' value={Bowling2data.MatchID} onChange={handleChange} required/>
+        <TextField id="BowlerName2" label="Bowler Name Team 2" variant="filled" type='text' name='bowlername2' value={Bowling2data.bowlername2} onChange={handleChange}  />
+        <TextField id="Overteam2" label="Over Team 2" variant="filled" type='Number' name='over2' value={Bowling2data.over2} onChange={handleChange}/>
+        <TextField id="Medteam2" label="Med Team 2" variant="filled" type='number' name='med2' value={Bowling2data.med2} onChange={handleChange}/>
+        <TextField id="Runteam2" label="Run Team 2" variant="filled" type='number' name='run2' value={Bowling2data.run2} onChange={handleChange}/> 
+        <TextField id="Wideteam2" label="Wide Team 2" variant="filled" type='number' name='wide2' value={Bowling2data.wide2} onChange={handleChange}/>
+        <TextField id="Wicketteam2" label="Wicket Team 2" variant="filled" type='Number' name='wicket2' value={Bowling2data.wicket2} onChange={handleChange}/>
+        <TextField id="ECO2" label="ECO Team2" variant="filled" type='Number' name='ECO2' value={Bowling2data.ECO2} onChange={handleChange}/>
         
           
-        
         </div> 
-        <div>
-            <button className='w-full py-1 px-2 font-semibold sm:text-[16px] text-[14px] bg-[#4D28D4] rounded-lg text-[white] hover:scale-105 ease-in-out duration-200'>SUBMIT</button></div>
-        </form>
+        <div className=' flex gap-[40px]'>
+        <button className='px-4 py-2 font-semibold bg-[#4a2be0] text-white rounded-lg hover:scale-105 transition'>
+          {Issubmitting ? (isEdit ? 'Updating...' : 'Submitting...') : (isEdit ? 'Update' : 'Submit')}
+  
+        </button>
+        {isEdit? (<Link to={'/match'}><button className='px-4 py-2 font-semibold bg-[#c94141] text-white rounded-lg hover:scale-105 transition' onClick={handleclear}>cancel</button></Link>):''}
+        </div>         </form>
      </div>
+     <Bowling2card/>
     </div>
 
   )
@@ -625,38 +714,136 @@ const handleclear=()=>{
 
 
 
+const bat2init={
+  MatchID:'',
+  Team2Run1:'',
+  Team2Four1:'',
+  Team2SR1:'',
+  Team2Min1:'',
+  Team2Run2:'',
+  Team2Four2:'',
+  Team2SR2:'',
+  Team2Min2:'',
+  Team2fallofwickets:'',
+  Team2BatterName1:'',
+  Team2Ball1:'',
+  Team2Six1:'',
+  Team2Status1:'',
+  Team2BatterName2:'',
+  Team2Ball2:'',
+  Team2Six2:'',
+  Team2Status2:'',
+  Team2Yettobat:''
+}
+
 export const Batterdata2=()=>{
+  const [Bating2data, SetBating2data] = useState(bat2init);
+  const [Issubmitting, Setissumitting] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const { id } = useParams();
+  const navigate = useNavigate();
+  
+
+  const handleChange = (event) => {
+    const { name, value } = event.target
+    SetBating2data((prevliveformdata) => ({ ...prevliveformdata, [name]: value }));
+  };
+
+  const getbat2ById = async (id) => {
+    try {
+       await axios.get(`http://localhost:7000/getbatting2ByIdandupdate?objid=${id}`, Config)
+       .then((res) => {
+        toast.success(res.data.message)  
+        SetBating2data(res.data);  
+    })
+    .catch((err) => console.log(err))
+    .finally(() => setIsEdit(true))
+      
+    } catch (error) {
+      toast.error(error.res.data.message );
+    }
+  };
+
+   useEffect(() => {
+      if (id) {
+        getbat2ById(id);
+      }
+    }, [id]);
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  Setissumitting(true)
+
+ 
+
+  try {
+    if (isEdit) {
+      await axios.put(`http://localhost:7000/updateBattingData2ById?objid=${Bating2data._id}`, Bating2data, Config)
+      .then((res) => {toast.success(res.data.message)
+       navigate('/match');
+       
+      })
+      .catch((err) => console.log(err))
+             .finally(() => Setissumitting(false))
+   } else {
+  await axios.post("http://localhost:7000/BattingData2", Bating2data, Config)
+              .then((res) => {
+                  toast.success(res.data.message)  
+              })
+              .catch((err) => console.log(err))
+              .finally(() => Setissumitting(false))
+      }}
+  
+  catch (error) {
+      console.log(error)
+  }
+
+
+  SetBating2data(bat2init)
+
+}
+
+const handleclear=()=>{
+  setIsEdit(false)
+  SetBating2data(bat2init)
+}
   return(
     <div className='w-full min-h-100vh flex flex-col justify-center items-center py-[40px] gap-[30px] '>
-     <h2 className='text-[22px] font-semibold text-[#4D28D4] underline'>BATTING DATA 2</h2>
+     <h2 className='text-[22px] font-semibold text-[#4D28D4] underline'>{isEdit ? 'EDIT DATA' : 'BATTING DATA 2'}</h2>
      <div className=''>
-        <form action=""  className='w-full flex flex-col gap-[50px] justify-center items-center' >
+        <form onSubmit={handleSubmit}  className='w-full flex flex-col gap-[50px] justify-center items-center' >
         <div className=' w-full grid sm:grid-cols-2 grid-cols-1 grid-flow-row text-[17px] justify-center items-center gap-[40px] '>   
-        <TextField id="MatchID" label="MatchID" variant="filled" type='text' name='MatchID' />
-        <TextField id="BatterName1Team2" label="Batter Name1 Team2" variant="filled" type='text' />
-        <TextField id="Team2Run1" label="Team2 Run1" variant="filled" type='Number' />
-        <TextField id="Team2Ball1" label="Team2 Ball1" variant="filled" type='number' />
-        <TextField id="Team2Four1" label="Team2 Four1" variant="filled" type='number' /> 
-        <TextField id="Team2Six1" label="Team2 Six1" variant="filled" type='number'/>
-        <TextField id="Team2SR1" label="Team2 SR1" variant="filled" type='Number'/>
-        <TextField id="Team2Status1" label="Team2 Status1" variant="filled" type='text'/>
-        <TextField id="Team2Min1" label="Team2 Min1" variant="filled" type='number'/>
-        <TextField id="BatterName2Team2" label="Batter Name2 Team2" variant="filled" type='text' />
-        <TextField id="Team2Run2" label="Team2 Run2" variant="filled" type='Number' />
-        <TextField id="Team2Ball2" label="Team2 Ball2" variant="filled" type='number' />
-        <TextField id="Team2Four2" label="Team2 Four2" variant="filled" type='number' /> 
-        <TextField id="Team2Six2" label="Team2 Six2" variant="filled" type='number'/>
-        <TextField id="Team2SR2" label="Team2 SR2" variant="filled" type='Number'/>
-        <TextField id="Team2Status2" label="Team2 Status2" variant="filled" type='text'/>
-        <TextField id="Team2Min2" label="Team2 Min2" variant="filled" type='number'/>
-        <TextField id="Team2Yettobat" label="Team2 Yet to bat" variant="filled" type='text'/>
-        <TextField id="Team2Fallofwickets" label="Team2 Fall of wickets" variant="filled" type='text'/>   
-        
+        <TextField id="MatchID" label="MatchID" variant="filled" type='text' name='MatchID' value={Bating2data.MatchID} onChange={handleChange} required />
+        <TextField id="BatterName1Team2" label="Batter Name1 Team2" variant="filled" type='text'  name='Team2BatterName1' value={Bating2data.Team2BatterName1} onChange={handleChange}/>
+        <TextField id="Team2Run1" label="Team2 Run1" variant="filled" type='Number' name='Team2Run1' value={Bating2data.Team2Run1} onChange={handleChange}/>
+        <TextField id="Team2Ball1" label="Team2 Ball1" variant="filled" type='number' name='Team2Ball1' value={Bating2data.Team2Ball1} onChange={handleChange} />
+        <TextField id="Team2Four1" label="Team2 Four1" variant="filled" type='number' name='Team2Four1' value={Bating2data.Team2Four1} onChange={handleChange} /> 
+        <TextField id="Team2Six1" label="Team2 Six1" variant="filled" type='number' name='Team2Six1' value={Bating2data.Team2Six1} onChange={handleChange}/>
+        <TextField id="Team2SR1" label="Team2 SR1" variant="filled" type='Number' name='Team2SR1' value={Bating2data.Team2SR1} onChange={handleChange}/>
+        <TextField id="Team2Status1" label="Team2 Status1" variant="filled" type='text' name='Team2Status1' value={Bating2data.Team2Status1} onChange={handleChange}/>
+        <TextField id="Team2Min1" label="Team2 Min1" variant="filled" type='number' name='Team2Min1' value={Bating2data.Team2Min1} onChange={handleChange}/>
+        <TextField id="BatterName2Team2" label="Batter Name2 Team2" variant="filled" type='text' name='Team2BatterName2' value={Bating2data.Team2BatterName2} onChange={handleChange}/>
+        <TextField id="Team2Run2" label="Team2 Run2" variant="filled" type='Number' name='Team2Run2' value={Bating2data.Team2Run2} onChange={handleChange} />
+        <TextField id="Team2Ball2" label="Team2 Ball2" variant="filled" type='number' name='Team2Ball2' value={Bating2data.Team2Ball2} onChange={handleChange}/>
+        <TextField id="Team2Four2" label="Team2 Four2" variant="filled" type='number' name='Team2Four2' value={Bating2data.Team2Four2} onChange={handleChange}/> 
+        <TextField id="Team2Six2" label="Team2 Six2" variant="filled" type='number' name='Team2Six2' value={Bating2data.Team2Six2} onChange={handleChange}/>
+        <TextField id="Team2SR2" label="Team2 SR2" variant="filled" type='Number' name='Team2SR2' value={Bating2data.Team2SR2} onChange={handleChange}/>
+        <TextField id="Team2Status2" label="Team2 Status2" variant="filled" type='text' name='Team2Status2' value={Bating2data.Team2Status2} onChange={handleChange}/>
+        <TextField id="Team2Min2" label="Team2 Min2" variant="filled" type='number' name='Team2Min2' value={Bating2data.Team2Min2} onChange={handleChange}/>
+        <TextField id="Team2Yettobat" label="Team2 Yet to bat" variant="filled" type='text' name='Team2Yettobat' value={Bating2data.Team2Yettobat} onChange={handleChange}/>
+        <TextField id="Team2Fallofwickets" label="Team2 Fall of wickets" variant="filled" type='text' name='Team2fallofwickets' value={Bating2data.Team2fallofwickets} onChange={handleChange}/> 
+
         </div> 
-        <div>
-            <button className='w-full py-1 px-2 font-semibold sm:text-[16px] text-[14px] bg-[#4D28D4] rounded-lg text-[white] hover:scale-105 ease-in-out duration-200'>SUBMIT</button></div>
-        </form>
+        <div className=' flex gap-[40px]'>
+        <button className='px-4 py-2 font-semibold bg-[#4a2be0] text-white rounded-lg hover:scale-105 transition'>
+          {Issubmitting ? (isEdit ? 'Updating...' : 'Submitting...') : (isEdit ? 'Update' : 'Submit')}
+  
+        </button>
+        {isEdit? (<Link to={'/match'}><button className='px-4 py-2 font-semibold bg-[#c94141] text-white rounded-lg hover:scale-105 transition' onClick={handleclear}>cancel</button></Link>):''}
+        </div>  
+                </form>
      </div>
+     <Batting2card/>
     </div>
 
   )

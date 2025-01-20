@@ -424,7 +424,7 @@ const handledelete=async(id)=>{
   await axios.delete(`http://localhost:7000/deleteBowlingDataById?objid=${id}`,Config)
   .then((res)=> {
       toast.success(res.data.message)
-      setBowling1((Prevmatch)=> Prevmatch.filter((match)=>match.MatchID !== id))
+      setBowling1((Prevmatch)=> Prevmatch.filter((match)=>match._id !== id))
   })
   .catch((err)=> console.log(err))
 
@@ -490,7 +490,7 @@ const handledelete=async(id)=>{
   await axios.delete(`http://localhost:7000/deleteBattingData1ById?objid=${id}`,Config)
   .then((res)=> {
       toast.success(res.data.message)
-      setBatting1((Prevmatch)=> Prevmatch.filter((match)=>match.MatchID !== id))
+      setBatting1((Prevmatch)=> Prevmatch.filter((match)=>match._id !== id))
   })
   .catch((err)=> console.log(err))
 
@@ -533,6 +533,151 @@ return (
                               <h1 className='font-semibold'>Six2: <span className="text-[black] font-normal">{match.Six2}</span></h1>
                               <h1 className='font-semibold'>Status2: <span className="text-[black] font-normal">{match.Status2}</span></h1>
                               <h1 className='font-semibold'>Yettobat: <span className="text-[black] font-normal">{match.Yettobat}</span></h1>
+                                                           </div>
+  ))}
+  </div>
+  </div>
+      </div>
+    )
+}
+
+export const Batting2card = () => {
+  const[Batting2,setBatting2]=useState([])
+
+const navigate= useNavigate()
+
+  const Fetchbatting2data=async()=>{
+    try {
+    await axios.get("http://localhost:7000/getAllBattingData2", Config)
+    .then((res)=>setBatting2(res.data))
+    .catch((err)=> toast.error(err.res.data.message))
+    .finally()
+     } catch (error) {
+          toast.error(error.res.data.message )
+        }
+      }
+
+
+useEffect(()=>{
+  Fetchbatting2data();
+},[])
+
+const handledelete=async(id)=>{
+     
+  await axios.delete(`http://localhost:7000/deleteBattingData2ById?objid=${id}`,Config)
+  .then((res)=> {
+      toast.success(res.data.message)
+      setBatting2((Prevmatch)=> Prevmatch.filter((match)=>match._id !== id))
+  })
+  .catch((err)=> console.log(err))
+
+}
+
+
+const handleUpdate = (id) => {
+  navigate(`/batting2/${id}`);
+};
+
+
+return (
+  <div>   
+  <div className='w-full min-h-100vh flex flex-col gap-5 justify-center items-center px-[20px]'>
+    <h1 className='text-[20px]'>Batting 2 details</h1>
+    <div className='w-full grid md:grid-cols-3 sm:grid-cols-3 grid-col-1 px-[30px] gap-10 '>
+  {
+                      Batting2.map((match)=>(
+                          <div key={match._id} className="w-full h-full bg-[#f7f5f8] flex flex-col gap-3 p-4 text-[#4D28D4] text-[14px] border-2 border-[#bbb8b8] rounded-xl"> 
+                             <div className='flex items-start justify-between gap-[40px] text-justify'> <h1 className='font-semibold  '>MatchID: <span className="text-[black]  font-normal">{match.MatchID}</span></h1>
+                             <div className='flex gap-6'>
+                                           <FaEdit className='text-[20px] cursor-pointer text-[#4a2be0]' onClick={() => handleUpdate(match._id)} />
+                                           <RiDeleteBin6Fill className="text-[20px] cursor-pointer text-[red]" onClick={() => handledelete(match._id)} />
+                                           </div></div>
+                             <div className='flex items-center justify-between'> <h1 className='font-semibold  '>Run1: <span className="text-[black]  font-normal">{match.Team2Run1}</span></h1></div>
+                              <h1 className='font-semibold'>Four1: <span className="text-[black] font-normal">{match.Team2Four1}</span></h1>
+                              <h1 className='font-semibold'>SR1: <span className="text-[black] font-normal">{match.Team2SR1}</span></h1>
+                              <h1 className='font-semibold'>Min1: <span className="text-[black] font-normal">{match.Team2Min1}</span></h1>
+                              <h1 className='font-semibold'>Run2: <span className="text-[black] font-normal">{match.Team2Run2}</span></h1>
+                              <h1 className='font-semibold'>Four2: <span className="text-[black] font-normal">{match.Team2Four2}</span></h1>
+                              <h1 className='font-semibold'>SR2: <span className="text-[black] font-normal">{match.Team2SR2}</span></h1>
+                              <h1 className='font-semibold'>Min2: <span className="text-[black] font-normal">{match.Team2Min2}</span></h1>
+                              <h1 className='font-semibold'>fallofwickets: <span className="text-[black] font-normal">{match.Team2fallofwickets}</span></h1>
+                              <h1 className='font-semibold'>BatterName1: <span className="text-[black] font-normal">{match.Team2BatterName1}</span></h1>
+                              <h1 className='font-semibold'>Ball1: <span className="text-[black] font-normal">{match.Team2Ball1}</span></h1>
+                              <h1 className='font-semibold'>Six1: <span className="text-[black] font-normal">{match.Team2Six1}</span></h1>
+                              <h1 className='font-semibold'>Status1: <span className="text-[black] font-normal">{match.Team2Status1}</span></h1>
+                              <h1 className='font-semibold'>BatterName2: <span className="text-[black] font-normal">{match.Team2BatterName2}</span></h1>
+                              <h1 className='font-semibold'>Ball2: <span className="text-[black] font-normal">{match.Team2Ball2}</span></h1>
+                              <h1 className='font-semibold'>Six2: <span className="text-[black] font-normal">{match.Team2Six2}</span></h1>
+                              <h1 className='font-semibold'>Status2: <span className="text-[black] font-normal">{match.Team2Status2}</span></h1>
+                              <h1 className='font-semibold'>Yettobat: <span className="text-[black] font-normal">{match.Team2Yettobat}</span></h1>
+                                                           </div>
+  ))}
+  </div>
+  </div>
+      </div>
+    )
+}
+
+
+export const Bowling2card = () => {
+  const[Bowling2,setBowling2]=useState([])
+
+const navigate= useNavigate()
+
+  const Fetchbowling2data=async()=>{
+    try {
+    await axios.get("http://localhost:7000/getAllBowlingData2", Config)
+    .then((res)=>setBowling2(res.data))
+    .catch((err)=> toast.error(err.res.data.message))
+    .finally()
+     } catch (error) {
+          toast.error(error.res.data.message )
+        }
+      }
+
+
+      
+useEffect(()=>{
+  Fetchbowling2data();
+},[])
+
+const handledelete=async(id)=>{
+     
+  await axios.delete(`http://localhost:7000/deleteBowlingData2ById?objid=${id}`,Config)
+  .then((res)=> {
+      toast.success(res.data.message)
+      setBowling2((Prevmatch)=> Prevmatch.filter((match)=>match._id !== id))
+  })
+  .catch((err)=> console.log(err))
+
+}
+
+
+const handleUpdate = (id) => {
+  navigate(`/bowling2/${id}`);
+};
+
+
+return (
+  <div>   
+  <div className='w-full min-h-100vh flex flex-col gap-5 justify-center items-center px-[20px]'>
+    <h1 className='text-[20px]'>Bowling 2 details</h1>
+    <div className='w-full grid md:grid-cols-3 sm:grid-cols-3 grid-col-1 px-[30px] gap-10 '>
+  {
+                      Bowling2.map((match)=>(
+                          <div key={match._id} className="w-full h-full bg-[#f7f5f8] flex flex-col gap-3 p-4 text-[#4D28D4] text-[14px] border-2 border-[#bbb8b8] rounded-xl"> 
+                             <div className='flex items-start justify-between gap-[40px] text-justify'> <h1 className='font-semibold  '>MatchID: <span className="text-[black]  font-normal">{match.MatchID}</span></h1>
+                             <div className='flex gap-6'>
+                                           <FaEdit className='text-[20px] cursor-pointer text-[#4a2be0]' onClick={() => handleUpdate(match._id)} />
+                                           <RiDeleteBin6Fill className="text-[20px] cursor-pointer text-[red]" onClick={() => handledelete(match._id)} />
+                                           </div></div>
+                             <div className='flex items-center justify-between'> <h1 className='font-semibold  '>over: <span className="text-[black]  font-normal">{match.over2}</span></h1></div>
+                              <h1 className='font-semibold'>Run: <span className="text-[black] font-normal">{match.run2}</span></h1>
+                              <h1 className='font-semibold'>wicket: <span className="text-[black] font-normal">{match.wicket2}</span></h1>
+                              <h1 className='font-semibold'>bowlername: <span className="text-[black] font-normal">{match.bowlername2}</span></h1>
+                              <h1 className='font-semibold'>med: <span className="text-[black] font-normal">{match.med2}</span></h1>
+                              <h1 className='font-semibold'>wide: <span className="text-[black] font-normal">{match.wide2}</span></h1>
+                              <h1 className='font-semibold'>ECO: <span className="text-[black] font-normal">{match.ECO2}</span></h1>
                                                            </div>
   ))}
   </div>

@@ -3,11 +3,13 @@ import logo from '../Assests/logo.png'
 import { RxCross2 } from "react-icons/rx";
 import { MdMenu } from "react-icons/md";
 import { useState } from 'react';
-
+import { FaCircleUser } from "react-icons/fa6";
 
 export const Navbar = () => {
     
     const [isChecked, setIsChecked] = useState(false);
+
+    const checkValue = localStorage.getItem("Adminuserdata");
    
     const handleToggle =()=>{
        setIsChecked(true)
@@ -39,8 +41,9 @@ export const Navbar = () => {
                     <Link to={'/news'}><li className='flex flex-col items-center group'><p className='flex items-center gap-1 hover:text-[#4D28D4]'>NEWS</p> </li></Link>
                    
                                       
-                   <Link  to={"/"}><button className='py-[3px] px-[5px] text-[13px]  border-[#4D28D4] border-[2px] rounded-md text-[black] hover:text-[white] hover:bg-[#4D28D4] ease-in-out duration-300'>SIGN IN</button> </Link>  
-                   
+                    {!checkValue?(<Link  to={"/"}><button className='py-[3px] px-[5px] text-[13px]  border-[#4D28D4] border-[2px] rounded-md text-[black] hover:text-[white] hover:bg-[#4D28D4] ease-in-out duration-300'>SIGN IN</button> </Link>):(
+                  <Link to={'/profile'}><p className='flex  items-center gap-[5px] group'><FaCircleUser className='text-[32px] text-[#4a2eb0]' /><p className='text-[black] text-[14px] flex justify-center rounded-b-lg invisible group-hover:visible ease-out duration-200'>PROFILE</p></p></Link>
+                )}  
                    </ul>
                    
                
@@ -50,8 +53,9 @@ export const Navbar = () => {
        <div className={`${isChecked? 'w-[80%] h-screen py-[30px] bg-[#ffffff] fixed z-30 overflow-y-scroll':"hidden"}`}> 
       <div className='w-full px-[40px] flex flex-col text-[14px] gap-5 '>
       <p onClick={handlemenuclose} className='text-[20px]'><RxCross2/></p>
-      <Link  to={"/"}><button className='py-[6px] w-full text-[14px] font-medium border-[#4D28D4] border-[2px] rounded-md text-[black] hover:text-[white] hover:bg-[#4D28D4] ease-in-out duration-300'>SIGN IN</button> </Link>
-      
+      {!checkValue?(<Link  to={"/"}><button className='w-[95%] py-[5px] mx-[10px] text-[14px]  border-[#4D28D4] border-[2px] rounded-md text-[black] hover:text-[white] hover:bg-[#4D28D4] ease-in-out duration-300'>SIGN IN</button> </Link>):(
+                  <Link to={'/profile'}><p className='mt-[10px] flex flex-col items-center gap-[15px] '><FaCircleUser className='text-[34px] text-[#4a2eb0]' /><p className='text-[black] text-[14px] flex justify-center rounded-b-lg '>PROFILE</p></p></Link>
+                )} 
       <Link to={"/home"}><p className='font-medium hover:text-[#4D28D4]'>HOME</p></Link>
       <Link to={"/match"}><p className='font-medium hover:text-[#4D28D4]'>MATCH</p></Link>
       <Link to={"/market"}><p className='font-medium hover:text-[#4D28D4]'>MARKET</p></Link>

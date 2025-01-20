@@ -11,6 +11,7 @@ import { ToastContainer} from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
 import { Private } from "./Private"
 import { Tournament } from "../Tournament/Tournament"
+import { Profile } from "../Profile/Profile"
 
 
 
@@ -32,7 +33,9 @@ export const Routercomponent = () => {
           <Route path="/playerofmatch/:id" element={<Match/>}/>
           <Route path="/comment/:id" element={<Match/>}/>
           <Route path="/bowling1/:id" element={<Match/>}/>
+          <Route path="/bowling2/:id" element={<Match/>}/>
           <Route path="/batting1/:id" element={<Match/>}/>
+          <Route path="/batting2/:id" element={<Match/>}/>
           <Route path="/news" element={<Newsnavbar/>}/>
           <Route path="/localnews/:id" element={<Newsnavbar/>}/>
           <Route path="/internews/:id" element={<Newsnavbar/>}/>
@@ -43,6 +46,7 @@ export const Routercomponent = () => {
         </Route>
         
         <Route path="/forgot" element={<Forgot/>}/>
+        <Route path="/profile" element={<Profile/>}/>
         </Routes>
         <ToastContainer/>
       </>
