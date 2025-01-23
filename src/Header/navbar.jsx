@@ -29,8 +29,8 @@ export const Navbar = () => {
            <div className='md:w-[18%] w-[90%] flex items-center gap-4'>
    <p className='text-[28px] ml-[-15px] md:hidden visible cursor-pointer ' onClick={handleToggle} ><MdMenu/></p>   
           <div className='w-full flex items-center justify-center gap-3'>
-          <Link to={"/"}><img src={logo} alt="couldn't load image" className='sm:w-[45px] sm:h-[45px] w-[40px] h-[40px]'/></Link> 
-          <Link to={"/"}><h3 className='font-bold sm:text-[18px] text-[16px] text-[#4D28D4] '>CRICLOG</h3></Link> 
+          <Link to={"/home"}><img src={logo} alt="couldn't load image" className='sm:w-[45px] sm:h-[45px] w-[40px] h-[40px]'/></Link> 
+          <Link to={"/home"}><h3 className='font-bold sm:text-[18px] text-[16px] text-[#4D28D4] '>CRICLOG</h3></Link> 
           </div> </div>
                <ul className='lg:w-[40%] md:w-[50%] w-full h-full md:flex items-center xl:gap-[25px] gap-[25px] font-semibold text-[14px] cursor-pointer md:visible hidden'>
                   
