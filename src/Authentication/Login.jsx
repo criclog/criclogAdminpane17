@@ -224,6 +224,7 @@ const verifyotpinit={
 export const Otpverify=({handleotpclose})=>{
     const [sendotp, setsendotp]=useState(sendotpinit);
     const [verifyotp, setverifyotp]=useState(verifyotpinit);
+    const [Issubmitting, Setissumitting] = useState(false);
 
     const handleChange = (event) => {
         const { name, value } = event.target
@@ -240,7 +241,7 @@ export const Otpverify=({handleotpclose})=>{
     
     const handleOTP = async (e) => {
         e.preventDefault();
-      
+        Setissumitting(true)
     
         try {
             
@@ -263,7 +264,7 @@ export const Otpverify=({handleotpclose})=>{
 
     const handleOTPVerify = async (e) => {
         e.preventDefault();
-    
+        Setissumitting(true)
         try {
             
                 await axios.post(`http://localhost:7000/admin/VerifyadminOTP`, verifyotp)
@@ -296,13 +297,13 @@ export const Otpverify=({handleotpclose})=>{
             <p className='md:text-[20px] sm:text-[18px] text-[16px] text-[#4D28D4] underline underline-offset-4'>OTP Verification</p>
             <form className='w-full py-5 flex sm:flex-row flex-col justify-center gap-3 items-center' onSubmit={handleOTP}>
             <TextField id="email" label="E-mail ID" variant="outlined" type='email' sx={textFieldStyles} name='email' onChange={handleChange} required />
-            <button type='submit' className='text-[15px] bg-[#4D28D4] text-[white] px-[15px] md:h-[40px] sm:h-[35px] h-[30px] rounded-[10px] shadow-md shadow-[#0000008f] font-sans'>Send OTP</button>
+            <button type='submit' disabled={Issubmitting} className='text-[15px] bg-[#4D28D4] text-[white] px-[15px] md:h-[40px] sm:h-[35px] h-[30px] rounded-[10px] shadow-md shadow-[#0000008f] font-sans'>Send OTP</button>
             </form>
             <p className='md:text-[20px] sm:text-[18px] text-[16px] text-[#4D28D4] underline underline-offset-4'>Confirm OTP</p>
             <form className=' py-5 flex flex-col justify-center gap-[20px] items-center' onSubmit={handleOTPVerify}>
             <TextField id="email" label="E-mail ID" variant="outlined" type='email' sx={textFieldStyles} name='email' onChange={handleChangeverify} required />
             <TextField id="OTP" label="OTP" variant="outlined" type='text' sx={textFieldStyles} name='OTP' onChange={handleChangeverify} required />
-            <button type='submit' className='text-[15px] bg-[#4D28D4] text-[white] w-[120px] md:h-[40px] sm:h-[35px] h-[30px]  rounded-[10px] shadow-md shadow-[#0000008f] font-sans '>Verify OTP</button>
+            <button type='submit' disabled={Issubmitting} className='text-[15px] bg-[#4D28D4] text-[white] w-[120px] md:h-[40px] sm:h-[35px] h-[30px]  rounded-[10px] shadow-md shadow-[#0000008f] font-sans '>Verify OTP</button>
             </form>
             </div>
            
