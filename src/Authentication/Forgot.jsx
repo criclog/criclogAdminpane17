@@ -29,7 +29,7 @@ const handleSubmit = async (e) => {
 
     try {
         
-            await axios.put(`http://localhost:7000/admin/putadmin`, updatedata)
+            await axios.put(`https://criclogbackendtest01.vercel.app/admin/putadmin`, updatedata)
                 .then((res) => {
                     toast.success(res.data.message)
 

@@ -38,7 +38,7 @@ export const Tournament = () => {
   };
   const gettournamentById = async (id) => {
     try {
-       await axios.get(`http://localhost:7000/getidTournament?objectid=${id}`, Config)
+       await axios.get(`https://criclogbackendtest01.vercel.app/getidTournament?objectid=${id}`, Config)
        .then((res) => {
         toast.success(res.data.message)  
         Setform(res.data);  
@@ -69,14 +69,14 @@ const handleSubmit = async (e) => {
 
   try {
     if (isEdit) {
-       await axios.put(`http://localhost:7000/updateTournament?objectid=${formdata._id}`, formDataToSend, Config)
+       await axios.put(`https://criclogbackendtest01.vercel.app/updateTournament?objectid=${formdata._id}`, formDataToSend, Config)
        .then((res) => {toast.success(res.data.message)
         navigate('/tournament');
         
        })
        .catch((err) => console.log(err))
               .finally(() => Setissumitting(false))
-    } else { await axios.post("http://localhost:7000/postTournament", formDataToSend, Config)
+    } else { await axios.post("https://criclogbackendtest01.vercel.app/postTournament", formDataToSend, Config)
               .then((res) => {
                   toast.success(res.data.message)  
               })
@@ -142,7 +142,7 @@ export const Gettournamentdata = () => {
 
   const Fetchtournamentdata=async()=>{
     try {
-    await axios.get("http://localhost:7000/getallTournament", Config)
+    await axios.get("https://criclogbackendtest01.vercel.app/getallTournament", Config)
     .then((res)=>settournamentdata(res.data))
     .catch((err)=> toast.error(err.res.data.message))
     .finally()
@@ -158,7 +158,7 @@ useEffect(()=>{
 
 const handledelete=async(id)=>{
        
-  await axios.delete(`http://localhost:7000/deleteTournament?objectid=${id}`,Config)
+  await axios.delete(`https://criclogbackendtest01.vercel.app/deleteTournament?objectid=${id}`,Config)
   .then((res)=> {
       toast.success(res.data.message)
       settournamentdata((Prevtournamentdata)=> Prevtournamentdata.filter((tournament)=>tournament._id !== id))
@@ -194,7 +194,7 @@ const handleUpdate = (id) => {
                            <div className='flex items-center justify-between'> <h1 className='font-semibold  '>Team 1: <span className="text-[black]  font-normal">{tournament.Team1}</span></h1></div>
                            <div className='flex items-center justify-between'> <h1 className='font-semibold  '>Team 2: <span className="text-[black]  font-normal">{tournament.Team2}</span></h1></div>
                             
-                            <img src={`http://localhost:7000/view/${tournament.filename}`} alt="" className='w-[100px] h-[100px] mx-auto' />
+                            <img src={`https://criclogbackendtest01.vercel.app/view/${tournament.filename}`} alt="" className='w-[100px] h-[100px] mx-auto' />
                             
                             </div>
 ))}

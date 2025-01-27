@@ -35,7 +35,7 @@ export const Market = () => {
 
   const getProdById = async (id) => {
     try {
-       await axios.get(`http://localhost:7000/getMarketById?objectid=${id}`, Config)
+       await axios.get(`https://criclogbackendtest01.vercel.app/getMarketById?objectid=${id}`, Config)
        .then((res) => {
         toast.success(res.data.message)  
         setForm(res.data);  
@@ -65,10 +65,10 @@ export const Market = () => {
 
     try {
       if (isEdit) {
-        const response = await axios.put(`http://localhost:7000/updatemarket?objectid=${formdata._id}`, formDataToSend, Config);
+        const response = await axios.put(`https://criclogbackendtest01.vercel.app/updatemarket?objectid=${formdata._id}`, formDataToSend, Config);
         toast.success(response.data.message);
       } else {
-        const response = await axios.post("http://localhost:7000/marketData", formDataToSend, Config);
+        const response = await axios.post("https://criclogbackendtest01.vercel.app/marketData", formDataToSend, Config);
         toast.success(response.data.message);
         
       }
@@ -121,7 +121,7 @@ export const Getproduct = () => {
 
   const fetchProgramData = async () => {
     try {
-     await axios.get("http://localhost:7000/getallData", Config)
+     await axios.get("https://criclogbackendtest01.vercel.app/getallData", Config)
      .then((res) => {
       toast.success(res.data.message)  
       setProduct(res.data); 
@@ -139,7 +139,7 @@ export const Getproduct = () => {
 
   const handledelete=async(id)=>{
        
-    await axios.delete(`http://localhost:7000/deletemarket?objectid=${id}`,Config)
+    await axios.delete(`https://criclogbackendtest01.vercel.app/deletemarket?objectid=${id}`,Config)
     .then((res)=> {
         toast.success(res.data.message)
         setProduct((Prevproduct)=> Prevproduct.filter((product)=>product._id !== id))
@@ -171,7 +171,7 @@ export const Getproduct = () => {
             <h1>Price: {prod.price}</h1>
             <h1>Seller Name: {prod.sellername}</h1>
             <h1>Description: {prod.description}</h1>
-            <img src={`http://localhost:7000/view/${prod.filename}`} alt="Product" className='w-40 h-40 mx-auto' />
+            <img src={`https://criclogbackendtest01.vercel.app/view/${prod.filename}`} alt="Product" className='w-40 h-40 mx-auto' />
             <h1>Posted: {prod.createdAt}</h1>
           </div>
         ))}

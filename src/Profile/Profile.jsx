@@ -22,6 +22,7 @@ export const Profile = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("Adminuserdata");
+    localStorage.removeItem("token");
     navigate("/");
   };
 
@@ -37,7 +38,7 @@ export const Profile = () => {
     }
 
     try {
-        await axios.put("http://localhost:7000/admin/putadminuserdata", {
+        await axios.put("https://criclogbackendtest01.vercel.app/admin/putadminuserdata", {
         email: updatedData.email,
         updatedData
       })

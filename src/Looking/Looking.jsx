@@ -32,7 +32,7 @@ export const Looking = () => {
 
   const getlookingById = async (id) => {
     try {
-       await axios.get(`http://localhost:7000/getlookingbyid?objectid=${id}`, Config)
+       await axios.get(`https://criclogbackendtest01.vercel.app/getlookingbyid?objectid=${id}`, Config)
        .then((res) => {
         toast.success(res.data.message)  
         Setform(res.data);  
@@ -63,14 +63,14 @@ const handleSubmit = async (e) => {
 
   try {
     if (isEdit) {
-       await axios.put(`http://localhost:7000/updatelooking?objectid=${formdata._id}`, formDataToSend, Config)
+       await axios.put(`https://criclogbackendtest01.vercel.app/updatelooking?objectid=${formdata._id}`, formDataToSend, Config)
        .then((res) => {toast.success(res.data.message)
         navigate('/looking');
         
        })
        .catch((err) => console.log(err))
               .finally(() => Setissumitting(false))
-    } else { await axios.post("http://localhost:7000/postlooking", formDataToSend, Config)
+    } else { await axios.post("https://criclogbackendtest01.vercel.app/postlooking", formDataToSend, Config)
               .then((res) => {
                   toast.success(res.data.message)  
               })
@@ -126,7 +126,7 @@ export const Getlookdata = () => {
 
   const Fetchlookingdata=async()=>{
     try {
-    await axios.get("http://localhost:7000/getlooking", Config)
+    await axios.get("https://criclogbackendtest01.vercel.app/getlooking", Config)
     .then((res)=>setlookingdata(res.data))
     .catch((err)=> toast.error(err.res.data.message))
     .finally()
@@ -142,7 +142,7 @@ useEffect(()=>{
 
 const handledelete=async(id)=>{
        
-  await axios.delete(`http://localhost:7000/deletelooking?objectid=${id}`,Config)
+  await axios.delete(`https://criclogbackendtest01.vercel.app/deletelooking?objectid=${id}`,Config)
   .then((res)=> {
       toast.success(res.data.message)
       setlookingdata((Prevlookingdata)=> Prevlookingdata.filter((looking)=>looking._id !== id))
@@ -171,7 +171,7 @@ const handleUpdate = (id) => {
                                          </div></div>
                            <div className='flex items-center justify-between'> <h1 className='font-semibold  '>category: <span className="text-[black]  font-normal">{look.category}</span></h1></div>
                             
-                            <img src={`http://localhost:7000/view/${look.filename}`} alt="" className='w-[200px] h-[200px] mx-auto' />
+                            <img src={`https://criclogbackendtest01.vercel.app/view/${look.filename}`} alt="" className='w-[200px] h-[200px] mx-auto' />
                             <h1 className='font-semibold'>posted: <span className="text-[black] font-normal">{look.createdAt}</span></h1>
                             </div>
 ))}

@@ -40,7 +40,7 @@ export const Login = () => {
     
         try {
             if (loginformdata) {
-                await axios.post(`http://localhost:7000/admin/signin`, logindata)
+                await axios.post(`https://criclogbackendtest01.vercel.app/admin/signin`, logindata)
                     .then((res) => {
                         toast.success(res.data.message)
                         localStorage.setItem("token", res.data.token)
@@ -52,7 +52,7 @@ export const Login = () => {
                     .finally(() => Setissumitting(false))
     
             } else {
-                await axios.post("http://localhost:7000/admin/signup", formdata)
+                await axios.post("https://criclogbackendtest01.vercel.app/admin/signup", formdata)
                     .then((res) => {
                         toast.success(res.data.message)
                         Setform(initial)
@@ -245,7 +245,7 @@ export const Otpverify=({handleotpclose})=>{
     
         try {
             
-                await axios.put(`http://localhost:7000/admin/sendadminOTP`, sendotp)
+                await axios.put(`https://criclogbackendtest01.vercel.app/admin/sendadminOTP`, sendotp)
                     .then((res) => {
                         toast.success(res.data.message)                
                         setsendotp(sendotpinit)   
@@ -267,7 +267,7 @@ export const Otpverify=({handleotpclose})=>{
         Setissumitting(true)
         try {
             
-                await axios.post(`http://localhost:7000/admin/VerifyadminOTP`, verifyotp)
+                await axios.post(`https://criclogbackendtest01.vercel.app/admin/VerifyadminOTP`, verifyotp)
                     .then((res) => {
                         toast.success(res.data.message)
                         setverifyotp(verifyotpinit)    

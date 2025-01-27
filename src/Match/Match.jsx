@@ -111,7 +111,7 @@ export const Matchlivedata=()=>{
 
   const getmatchliveById = async (id) => {
     try {
-       await axios.get(`http://localhost:7000/getMatchById?MatchID=${id}`, Config)
+       await axios.get(`https://criclogbackendtest01.vercel.app/getMatchById?MatchID=${id}`, Config)
        .then((res) => {
         toast.success(res.data.message)  
         SetMatchliveformdata(res.data);  
@@ -138,7 +138,7 @@ const handleSubmit = async (e) => {
 
   try {
     if (isEdit) {
-      await axios.put(`http://localhost:7000/updateMatchById?MatchID=${Matchliveformdata.MatchID}`, Matchliveformdata, Config)
+      await axios.put(`https://criclogbackendtest01.vercel.app/updateMatchById?MatchID=${Matchliveformdata.MatchID}`, Matchliveformdata, Config)
       .then((res) => {toast.success(res.data.message)
        navigate('/match');
        
@@ -146,7 +146,7 @@ const handleSubmit = async (e) => {
       .catch((err) => console.log(err))
              .finally(() => Setissumitting(false))
    } else {
-  await axios.post("http://localhost:7000/createMatch", Matchliveformdata, Config)
+  await axios.post("https://criclogbackendtest01.vercel.app/createMatch", Matchliveformdata, Config)
               .then((res) => {
                   toast.success(res.data.message)  
               })
@@ -253,7 +253,7 @@ export const Livescore=()=>{
 
   const getlivescoretById = async (id) => {
     try {
-       await axios.get(`http://localhost:7000/getMatchLiveById?MatchID=${id}`, Config)
+       await axios.get(`https://criclogbackendtest01.vercel.app/getMatchLiveById?MatchID=${id}`, Config)
        .then((res) => {
         toast.success(res.data.message)  
         Setlivescoreform(res.data);  
@@ -280,7 +280,7 @@ const handleSubmit = async (e) => {
 
   try {
     if (isEdit) {
-      await axios.put(`http://localhost:7000/updateMatchLiveById?MatchID=${livescoreformdata.MatchID}`, livescoreformdata, Config)
+      await axios.put(`https://criclogbackendtest01.vercel.app/updateMatchLiveById?MatchID=${livescoreformdata.MatchID}`, livescoreformdata, Config)
       .then((res) => {toast.success(res.data.message)
        navigate('/match');
        
@@ -288,7 +288,7 @@ const handleSubmit = async (e) => {
       .catch((err) => console.log(err))
              .finally(() => Setissumitting(false))
    } else {
-  await axios.post("http://localhost:7000/createMatchLive", livescoreformdata, Config)
+  await axios.post("https://criclogbackendtest01.vercel.app/createMatchLive", livescoreformdata, Config)
               .then((res) => {
                   toast.success(res.data.message)  
               })
@@ -368,7 +368,7 @@ export const Bowlingdata=()=>{
 
   const getbowling1ById = async (id) => {
     try {
-       await axios.get(`http://localhost:7000/getBowlingDataByIdandupdate?objid=${id}`, Config)
+       await axios.get(`https://criclogbackendtest01.vercel.app/getBowlingDataByIdandupdate?objid=${id}`, Config)
        .then((res) => {
         toast.success(res.data.message)  
         SetBowling1data(res.data);  
@@ -395,7 +395,7 @@ const handleSubmit = async (e) => {
 
   try {
     if (isEdit) {
-      await axios.put(`http://localhost:7000/updateBowlingDataById?objid=${Bowling1data._id}`, Bowling1data, Config)
+      await axios.put(`https://criclogbackendtest01.vercel.app/updateBowlingDataById?objid=${Bowling1data._id}`, Bowling1data, Config)
       .then((res) => {toast.success(res.data.message)
        navigate('/match');
        
@@ -403,7 +403,7 @@ const handleSubmit = async (e) => {
       .catch((err) => console.log(err))
              .finally(() => Setissumitting(false))
    } else {
-  await axios.post("http://localhost:7000/BowlingData", Bowling1data, Config)
+  await axios.post("https://criclogbackendtest01.vercel.app/BowlingData", Bowling1data, Config)
               .then((res) => {
                   toast.success(res.data.message)  
               })
@@ -485,7 +485,7 @@ export const Bowlingdata2=()=>{
 
   const getbowling2ById = async (id) => {
     try {
-       await axios.get(`http://localhost:7000/getBowlingData2ByIdandupdate?objid=${id}`, Config)
+       await axios.get(`https://criclogbackendtest01.vercel.app/getBowlingData2ByIdandupdate?objid=${id}`, Config)
        .then((res) => {
         toast.success(res.data.message)  
         SetBowling2data(res.data);  
@@ -512,7 +512,7 @@ const handleSubmit = async (e) => {
 
   try {
     if (isEdit) {
-      await axios.put(`http://localhost:7000/updateBowlingData2ById?objid=${Bowling2data._id}`, Bowling2data, Config)
+      await axios.put(`https://criclogbackendtest01.vercel.app/updateBowlingData2ById?objid=${Bowling2data._id}`, Bowling2data, Config)
       .then((res) => {toast.success(res.data.message)
        navigate('/match');
        
@@ -520,7 +520,7 @@ const handleSubmit = async (e) => {
       .catch((err) => console.log(err))
              .finally(() => Setissumitting(false))
    } else {
-  await axios.post("http://localhost:7000/BowlingData2", Bowling2data, Config)
+  await axios.post("https://criclogbackendtest01.vercel.app/BowlingData2", Bowling2data, Config)
               .then((res) => {
                   toast.success(res.data.message)  
               })
@@ -613,7 +613,7 @@ export const Batterdata=()=>{
 
   const getbat1ById = async (id) => {
     try {
-       await axios.get(`http://localhost:7000/getbatting1ByIdandupdate?objid=${id}`, Config)
+       await axios.get(`https://criclogbackendtest01.vercel.app/getbatting1ByIdandupdate?objid=${id}`, Config)
        .then((res) => {
         toast.success(res.data.message)  
         SetBating1data(res.data);  
@@ -640,7 +640,7 @@ const handleSubmit = async (e) => {
 
   try {
     if (isEdit) {
-      await axios.put(`http://localhost:7000/updateBattingData1ById?objid=${Bating1data._id}`, Bating1data, Config)
+      await axios.put(`https://criclogbackendtest01.vercel.app/updateBattingData1ById?objid=${Bating1data._id}`, Bating1data, Config)
       .then((res) => {toast.success(res.data.message)
        navigate('/match');
        
@@ -648,7 +648,7 @@ const handleSubmit = async (e) => {
       .catch((err) => console.log(err))
              .finally(() => Setissumitting(false))
    } else {
-  await axios.post("http://localhost:7000/BattingData1", Bating1data, Config)
+  await axios.post("https://criclogbackendtest01.vercel.app/BattingData1", Bating1data, Config)
               .then((res) => {
                   toast.success(res.data.message)  
               })
@@ -751,7 +751,7 @@ export const Batterdata2=()=>{
 
   const getbat2ById = async (id) => {
     try {
-       await axios.get(`http://localhost:7000/getbatting2ByIdandupdate?objid=${id}`, Config)
+       await axios.get(`https://criclogbackendtest01.vercel.app/getbatting2ByIdandupdate?objid=${id}`, Config)
        .then((res) => {
         toast.success(res.data.message)  
         SetBating2data(res.data);  
@@ -778,7 +778,7 @@ const handleSubmit = async (e) => {
 
   try {
     if (isEdit) {
-      await axios.put(`http://localhost:7000/updateBattingData2ById?objid=${Bating2data._id}`, Bating2data, Config)
+      await axios.put(`https://criclogbackendtest01.vercel.app/updateBattingData2ById?objid=${Bating2data._id}`, Bating2data, Config)
       .then((res) => {toast.success(res.data.message)
        navigate('/match');
        
@@ -786,7 +786,7 @@ const handleSubmit = async (e) => {
       .catch((err) => console.log(err))
              .finally(() => Setissumitting(false))
    } else {
-  await axios.post("http://localhost:7000/BattingData2", Bating2data, Config)
+  await axios.post("https://criclogbackendtest01.vercel.app/BattingData2", Bating2data, Config)
               .then((res) => {
                   toast.success(res.data.message)  
               })
@@ -891,7 +891,7 @@ const Commentaryinit={
     const getCommentID=async(id)=>{
       try {
         await axios
-        .get(`http://localhost:7000/getCommentaryByIdandupdate?objid=${id}`,Config)
+        .get(`https://criclogbackendtest01.vercel.app/getCommentaryByIdandupdate?objid=${id}`,Config)
         .then((res)=>{
           toast.success(res.data.message)
           setComment(res.data)
@@ -920,7 +920,7 @@ const Commentaryinit={
   if (isEdit) {
     await axios
     .put(
-      `http://localhost:7000/updateCommentaryById?objid=${Commentdata._id}`,
+      `https://criclogbackendtest01.vercel.app/updateCommentaryById?objid=${Commentdata._id}`,
        Commentdata,
        Config
     )
@@ -934,7 +934,7 @@ const Commentaryinit={
     
   } else {
      await axios
-     .post("http://localhost:7000/commentaryData",
+     .post("https://criclogbackendtest01.vercel.app/commentaryData",
       Commentdata,
       Config
      )
@@ -1155,7 +1155,7 @@ export const Playerofmatch = () => {
   const getplayerofmatchID=async(id)=>{
   try {
     await axios
-    .get(`http://localhost:7000/getPlayerMatchById?MatchID=${id}`,Config)
+    .get(`https://criclogbackendtest01.vercel.app/getPlayerMatchById?MatchID=${id}`,Config)
     .then((res)=>{
       toast.success(res.data.message)
       setPlayerofmatchform(res.data)
@@ -1183,7 +1183,7 @@ useEffect(()=>{
 if (isEdit) {
   await axios
   .put(
-    `http://localhost:7000/updatePlayerMatchById?MatchID=${Playerofmatchdata.MatchID}`,
+    `https://criclogbackendtest01.vercel.app/updatePlayerMatchById?MatchID=${Playerofmatchdata.MatchID}`,
      Playerofmatchdata,
      Config
   )
@@ -1197,7 +1197,7 @@ if (isEdit) {
   
 } else {
    await axios
-   .post("http://localhost:7000/createPlayerMatch",
+   .post("https://criclogbackendtest01.vercel.app/createPlayerMatch",
     Playerofmatchdata,
     Config
    )

@@ -97,7 +97,7 @@ const [localformdata, Setlocalform] = useState(newsinitial);
 
     const getlocalnewsById = async (id) => {
       try {
-         await axios.get(`http://localhost:7000/getnewsById?objectid=${id}`, Config)
+         await axios.get(`https://criclogbackendtest01.vercel.app/getnewsById?objectid=${id}`, Config)
          .then((res) => {
           toast.success(res.data.message)  
           Setlocalform(res.data);  
@@ -130,7 +130,7 @@ const [localformdata, Setlocalform] = useState(newsinitial);
   
       try {
         if (isEdit) {
-          await axios.put(`http://localhost:7000/updatenews?objectid=${localformdata._id}`, formDataToSend, Config)
+          await axios.put(`https://criclogbackendtest01.vercel.app/updatenews?objectid=${localformdata._id}`, formDataToSend, Config)
           .then((res) => {toast.success(res.data.message)
            navigate('/news');
            
@@ -138,7 +138,7 @@ const [localformdata, Setlocalform] = useState(newsinitial);
           .catch((err) => console.log(err))
                  .finally(() => Setissumitting(false))
        } else {
-              await axios.post("http://localhost:7000/newsData", formDataToSend, Config)
+              await axios.post("https://criclogbackendtest01.vercel.app/newsData", formDataToSend, Config)
                   .then((res) => {
                       toast.success(res.data.message)  
                   })
@@ -204,7 +204,7 @@ export const Getlocalnews = () => {
 
 
   const Fetchlocalnewsdata=async()=>{
-    await axios.get("http://localhost:7000/getnewsallData", Config)
+    await axios.get("https://criclogbackendtest01.vercel.app/getnewsallData", Config)
     .then((res)=>setlocalnews(res.data))
     .catch((err)=> toast.error(err.res.data.message))
     .finally()
@@ -216,7 +216,7 @@ useEffect(()=>{
 
 const handledelete=async(id)=>{
        
-  await axios.delete(`http://localhost:7000/deletenews?objectid=${id}`,Config)
+  await axios.delete(`https://criclogbackendtest01.vercel.app/deletenews?objectid=${id}`,Config)
   .then((res)=> {
       toast.success(res.data.message)
       setlocalnews((Prevlocalnews)=> Prevlocalnews.filter((localnews)=>localnews._id !== id))
@@ -251,7 +251,7 @@ const handleUpdate = (id) => {
                             <h1 className='font-semibold'>Key moments: <span className="text-[black] font-normal">{news.keyMoments}</span></h1>
                             <h1 className='font-semibold'>Top batter: <span className="text-[black] font-normal">{news.topBatter}</span></h1>
                             <h1 className='font-semibold'>Top Bowler: <span className="text-[black] font-normal">{news.topBowler}</span></h1>
-                            <img src={`http://localhost:7000/view/${news.filename}`} alt="" className='w-[200px] h-[200px] mx-auto' />
+                            <img src={`https://criclogbackendtest01.vercel.app/view/${news.filename}`} alt="" className='w-[200px] h-[200px] mx-auto' />
                             <h1 className='font-semibold'>posted: <span className="text-[black] font-normal">{news.date}</span></h1>
                             </div>
 ))}
@@ -296,7 +296,7 @@ export const Internationalnews = () => {
 
   const getinternewsById = async (id) => {
     try {
-       await axios.get(`http://localhost:7000/getInternationalById?objectid=${id}`, Config)
+       await axios.get(`https://criclogbackendtest01.vercel.app/getInternationalById?objectid=${id}`, Config)
        .then((res) => {
         toast.success(res.data.message)  
         Setinterform(res.data);  
@@ -326,14 +326,14 @@ export const Internationalnews = () => {
 
     try {
       if (isEdit) {
-        await axios.put(`http://localhost:7000/updateInternational?objectid=${interformdata._id}`, formDataToSend, Config)
+        await axios.put(`https://criclogbackendtest01.vercel.app/updateInternational?objectid=${interformdata._id}`, formDataToSend, Config)
         .then((res) => {toast.success(res.data.message)
          navigate('/news');
          
         })
         .catch((err) => console.log(err))
                .finally(() => Setissumitting(false))
-     } else {  await axios.post("http://localhost:7000/internationalData", formDataToSend, Config)
+     } else {  await axios.post("https://criclogbackendtest01.vercel.app/internationalData", formDataToSend, Config)
                 .then((res) => {
                     toast.success(res.data.message)  
                 })
@@ -402,7 +402,7 @@ export const Getinternews = () => {
 
 
   const Fetchinternewsdata=async()=>{
-    await axios.get("http://localhost:7000/getAllInternationalData", Config)
+    await axios.get("https://criclogbackendtest01.vercel.app/getAllInternationalData", Config)
     .then((res)=>setinternews(res.data))
     .catch((err)=> toast.error(err.res.data.message))
     .finally()
@@ -414,7 +414,7 @@ useEffect(()=>{
 
 const handledelete=async(id)=>{
        
-  await axios.delete(`http://localhost:7000/deleteInternational?objectid=${id}`,Config)
+  await axios.delete(`https://criclogbackendtest01.vercel.app/deleteInternational?objectid=${id}`,Config)
   .then((res)=> {
       toast.success(res.data.message)
       setinternews((Previnternews)=> Previnternews.filter((internews)=>internews._id !== id))
@@ -448,7 +448,7 @@ const handleUpdate = (id) => {
                             <h1 className='font-semibold'>Key moments: <span className="text-[black] font-normal">{news.keyMoments}</span></h1>
                             <h1 className='font-semibold'>Top batter: <span className="text-[black] font-normal">{news.topBatter}</span></h1>
                             <h1 className='font-semibold'>Top Bowler: <span className="text-[black] font-normal">{news.topBowler}</span></h1>
-                            <img src={`http://localhost:7000/view/${news.filename}`} alt="" className='w-[200px] h-[200px] mx-auto' />
+                            <img src={`https://criclogbackendtest01.vercel.app/view/${news.filename}`} alt="" className='w-[200px] h-[200px] mx-auto' />
                             <h1 className='font-semibold'>posted: <span className="text-[black] font-normal">{news.date}</span></h1>
                             </div>
 ))}

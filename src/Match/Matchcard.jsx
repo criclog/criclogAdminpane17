@@ -14,7 +14,7 @@ export const Livescorecard = () => {
 
     const Fetchlivescoredata=async()=>{
       try {
-      await axios.get("http://localhost:7000/getAllMatchLives", Config)
+      await axios.get("https://criclogbackendtest01.vercel.app/getAllMatchLives", Config)
       .then((res)=>setLivescoredata(res.data))
       .catch((err)=> toast.error(err.res.data.message))
       .finally()
@@ -30,7 +30,7 @@ export const Livescorecard = () => {
 
   const handledelete=async(id)=>{
        
-    await axios.delete(`http://localhost:7000/deleteMatchLiveById?MatchID=${id}`,Config)
+    await axios.delete(`https://criclogbackendtest01.vercel.app/deleteMatchLiveById?MatchID=${id}`,Config)
     .then((res)=> {
         toast.success(res.data.message)
         setLivescoredata((Prevlivescoredata)=> Prevlivescoredata.filter((livescore)=>livescore.MatchID !== id))
@@ -79,7 +79,7 @@ const navigate= useNavigate()
 
   const Fetchmatchdata=async()=>{
     try {
-    await axios.get("http://localhost:7000/getAllMatches", Config)
+    await axios.get("https://criclogbackendtest01.vercel.app/getAllMatches", Config)
     .then((res)=>setMatchdata(res.data))
     .catch((err)=> toast.error(err.res.data.message))
     .finally()
@@ -95,7 +95,7 @@ useEffect(()=>{
 
 const handledelete=async(id)=>{
      
-  await axios.delete(`http://localhost:7000/deleteMatchById?MatchID=${id}`,Config)
+  await axios.delete(`https://criclogbackendtest01.vercel.app/deleteMatchById?MatchID=${id}`,Config)
   .then((res)=> {
       toast.success(res.data.message)
       setMatchdata((Prevmatch)=> Prevmatch.filter((match)=>match.MatchID !== id))
@@ -156,7 +156,7 @@ export const PlayerofmatchdataCard = () => {
   const Fetchpalyerofmatch = async () => {
     try {
       await axios
-        .get("http://localhost:7000/getAllPlayerMatches", Config)
+        .get("https://criclogbackendtest01.vercel.app/getAllPlayerMatches", Config)
         .then((res) => setPlayerofmatchcard(res.data))
         .catch((err) => toast.error(err.res.data.message))
         .finally();
@@ -171,7 +171,7 @@ export const PlayerofmatchdataCard = () => {
   const handledelete = async (id) => {
     try {
       await axios
-        .delete(`http://localhost:7000/deletePlayerMatchById?MatchID=${id}`)
+        .delete(`https://criclogbackendtest01.vercel.app/deletePlayerMatchById?MatchID=${id}`)
         .then((res) => {
           toast.success(res.data.message);
           setPlayerofmatchcard((prev) =>
@@ -261,7 +261,7 @@ export const CommentaryCard = () => {
   const FetchComment = async () => {
     try {
       await axios
-        .get("http://localhost:7000/getAllCommentaries", Config)
+        .get("https://criclogbackendtest01.vercel.app/getAllCommentaries", Config)
         .then((res) => setCommentcard(res.data))
         .catch((err) => toast.error(err.res.data.message))
         .finally();
@@ -276,7 +276,7 @@ export const CommentaryCard = () => {
   const handledelete = async (id) => {
     try {
       await axios
-        .delete(`http://localhost:7000/deleteCommentaryById?objid=${id}`)
+        .delete(`https://criclogbackendtest01.vercel.app/deleteCommentaryById?objid=${id}`)
         .then((res) => {
           toast.success(res.data.message);
           setCommentcard((prev) =>
@@ -405,7 +405,7 @@ const navigate= useNavigate()
 
   const Fetchbowling1data=async()=>{
     try {
-    await axios.get("http://localhost:7000/getAllBowlingData", Config)
+    await axios.get("https://criclogbackendtest01.vercel.app/getAllBowlingData", Config)
     .then((res)=>setBowling1(res.data))
     .catch((err)=> toast.error(err.res.data.message))
     .finally()
@@ -421,7 +421,7 @@ useEffect(()=>{
 
 const handledelete=async(id)=>{
      
-  await axios.delete(`http://localhost:7000/deleteBowlingDataById?objid=${id}`,Config)
+  await axios.delete(`https://criclogbackendtest01.vercel.app/deleteBowlingDataById?objid=${id}`,Config)
   .then((res)=> {
       toast.success(res.data.message)
       setBowling1((Prevmatch)=> Prevmatch.filter((match)=>match._id !== id))
@@ -471,7 +471,7 @@ const navigate= useNavigate()
 
   const Fetchbatting1data=async()=>{
     try {
-    await axios.get("http://localhost:7000/getAllBattingData1", Config)
+    await axios.get("https://criclogbackendtest01.vercel.app/getAllBattingData1", Config)
     .then((res)=>setBatting1(res.data))
     .catch((err)=> toast.error(err.res.data.message))
     .finally()
@@ -487,7 +487,7 @@ useEffect(()=>{
 
 const handledelete=async(id)=>{
      
-  await axios.delete(`http://localhost:7000/deleteBattingData1ById?objid=${id}`,Config)
+  await axios.delete(`https://criclogbackendtest01.vercel.app/deleteBattingData1ById?objid=${id}`,Config)
   .then((res)=> {
       toast.success(res.data.message)
       setBatting1((Prevmatch)=> Prevmatch.filter((match)=>match._id !== id))
@@ -548,7 +548,7 @@ const navigate= useNavigate()
 
   const Fetchbatting2data=async()=>{
     try {
-    await axios.get("http://localhost:7000/getAllBattingData2", Config)
+    await axios.get("https://criclogbackendtest01.vercel.app/getAllBattingData2", Config)
     .then((res)=>setBatting2(res.data))
     .catch((err)=> toast.error(err.res.data.message))
     .finally()
@@ -564,7 +564,7 @@ useEffect(()=>{
 
 const handledelete=async(id)=>{
      
-  await axios.delete(`http://localhost:7000/deleteBattingData2ById?objid=${id}`,Config)
+  await axios.delete(`https://criclogbackendtest01.vercel.app/deleteBattingData2ById?objid=${id}`,Config)
   .then((res)=> {
       toast.success(res.data.message)
       setBatting2((Prevmatch)=> Prevmatch.filter((match)=>match._id !== id))
@@ -626,7 +626,7 @@ const navigate= useNavigate()
 
   const Fetchbowling2data=async()=>{
     try {
-    await axios.get("http://localhost:7000/getAllBowlingData2", Config)
+    await axios.get("https://criclogbackendtest01.vercel.app/getAllBowlingData2", Config)
     .then((res)=>setBowling2(res.data))
     .catch((err)=> toast.error(err.res.data.message))
     .finally()
@@ -643,7 +643,7 @@ useEffect(()=>{
 
 const handledelete=async(id)=>{
      
-  await axios.delete(`http://localhost:7000/deleteBowlingData2ById?objid=${id}`,Config)
+  await axios.delete(`https://criclogbackendtest01.vercel.app/deleteBowlingData2ById?objid=${id}`,Config)
   .then((res)=> {
       toast.success(res.data.message)
       setBowling2((Prevmatch)=> Prevmatch.filter((match)=>match._id !== id))
