@@ -145,47 +145,48 @@ export const Homedressroom = () => {
   }
 
 
-export const Homenumbersect = () => {
+  export const Homenumbersect = () => {
     return (
-      <div className="w-full min-h-[400px] bg-[#00FFCF] flex flex-col justify-center items-center gap-6 py-12 px-4">
-      <h2 className="text-[20px] sm:text-[24px] md:text-[32px] font-normal text-center">
+      <div className="w-full min-h-[400px] bg-[#ebeaf1] flex flex-col justify-center items-center  py-12 px-4 text-[black]">
+      <h2 className="text-[20px] sm:text-[24px] md:text-[32px] font-serif text-center py-[40px]">
         CricLog in Numbers
       </h2>
-      <div className="w-full flex flex-wrap justify-center items-center gap-4 sm:gap-6 md:gap-8 divide-y-0 md:divide-y-0 md:divide-x divide-[#7b7b7c] py-4 text-[12px] sm:text-[14px] font-medium">
-        <p className="text-center md:px-6">
-          <span className="text-[20px] sm:text-[24px] md:text-[30px] font-semibold">15th</span><br />
-          <span className="text-[16px] sm:text-[18px] md:text-[22px] font-semibold">May 2019</span><br />
+      <div className="w-full flex flex-wrap justify-center items-center gap-4 sm:gap-6 md:gap-8 md:divide-y-0 md:divide-x divide-[#bfbfc0]  text-[12px] sm:text-[14px] font-medium">
+        <p className="text-center md:px-6 py-[10px] ">
+          <span className="text-[20px] sm:text-[24px] md:text-[30px]  ">15th</span><br />
+          <span className="text-[16px] sm:text-[18px] md:text-[22px] ">May 2019</span><br />
           First Match Scored
         </p>
         <p className="text-center md:px-6">
-          <span className="text-[20px] sm:text-[24px] md:text-[30px] font-semibold">8M+</span><br />
-          <span className="text-[16px] sm:text-[18px] md:text-[22px] font-semibold">MATCHES</span><br />
+          <span className="text-[20px] sm:text-[24px] md:text-[30px] ">8M+</span><br />
+          <span className="text-[16px] sm:text-[18px] md:text-[22px] ">MATCHES</span><br />
           Scored so far
         </p>
         <p className="text-center md:px-6">
-          <span className="text-[20px] sm:text-[24px] md:text-[30px] font-semibold">540K+</span><br />
-          <span className="text-[16px] sm:text-[18px] md:text-[22px] font-semibold">TOURNAMENTS</span><br />
+          <span className="text-[20px] sm:text-[24px] md:text-[30px] ">540K+</span><br />
+          <span className="text-[16px] sm:text-[18px] md:text-[22px] ">TOURNAMENTS</span><br />
           Covered so far
         </p>
         <p className="text-center md:px-6">
-          <span className="text-[20px] sm:text-[24px] md:text-[30px] font-semibold">30M+</span><br />
-          <span className="text-[16px] sm:text-[18px] md:text-[22px] font-semibold">PLAYERS</span><br />
+          <span className="text-[20px] sm:text-[24px] md:text-[30px] ">30M+</span><br />
+          <span className="text-[16px] sm:text-[18px] md:text-[22px] ">PLAYERS</span><br />
           Registered so far
         </p>
       </div>
-      <div className="w-[80%] sm:w-[90%] md:w-[75%] h-[1px] bg-[#7b7b7c]"></div>
+      <div className="w-[80%] sm:w-[90%] md:w-[75%] h-[1px] bg-[#bbbbbd] "></div>
       <div className="w-full flex flex-col md:flex-row justify-center items-center gap-4 md:gap-6">
-        <p className="text-[14px] sm:text-[16px] md:text-[18px] font-semibold text-center">
+        <p className="text-[14px] sm:text-[16px] md:text-[18px] font-medium text-center py-[40px]">
           Become a Part of the World's Biggest Cricket Network.
         </p>
-        <button className="text-[12px] sm:text-[14px] md:text-[16px] font-bold p-2 border border-black rounded-md hover:bg-white hover:border-white hover:scale-105 hover:text-[#4D28D4] transition duration-200 ease-in-out">
+       <Link to={'/get-app'}> <button className="text-[12px] sm:text-[14px] md:text-[16px] font-bold py-1 px-2 border border-black rounded-md hover:text-[#4D28D4] transition duration-200 ease-in-out">
           GET APP
-        </button>
+        </button></Link>
       </div>
     </div>
 
     )
   }
+
 
 
 export const Hometaginesect = () => {
@@ -196,7 +197,7 @@ export const Hometaginesect = () => {
                   <div className='w-full h-full absolute top-0 flex flex-col justify-center items-center gap-[30px] px-[30px]'>
                     <p className='md:text-[20px] text-[18px] '>Every cricket story resonates deeply with us, which is why</p>
                     <p className='md:text-[24px] text-[22px] font-semibold'>Your Cricket Matters</p>
-                    <iframe className="md:w-[500px] md:h-[300px] sm:w-[400px] sm:h-[250px] w-[280px] h-[220px]" src="https://www.youtube.com/embed/-1TdUlp4adE?si=ji4KjRAEjwuTO11Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    <iframe className="md:w-[500px] md:h-[300px] sm:w-[400px] sm:h-[250px] w-[280px] h-[220px]" src="https://www.youtube.com/embed/pGvp5Q-1Yag?si=B1R3UPVjfSLw2EvT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                     <p className='text-[16px]'>Presenting our brand-new tagline</p>
                     </div>
           </div>
